@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #demo {
+      width: 100px;
+      height: 100px;
+      background: cornflowerblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo"></div>
+
+  <script src="jquery-3.6.0.js"></script>
+
+  <script>
+    $.fn.extend({
+      drag: function (options) {
+        var _this = $(this);
+
+        options = options || {};
+        options.limit = options.limit || false;
+
+        $(this).css({
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          cursor: 'move'
+        })
+
+        $(this).mousedown(function (e) {
+          var disX = e.pageX - $(this).offset().left;
+          var disY = e.pageY - $(this).offset().top;
+
+          $(document).mousemove(function (e) {
+            var newLeft = e.pageX - disX;
+            var newTop = e.pageY - disY;
+
+            if (options.limit) {
+              if (newLeft < 0) {
+                newLeft = 0;
+              } else if (newLeft > $(this).innerWidth() - _this.outerWidth()) {
+                newLeft = $(this).innerWidth() - _this.outerWidth();
+              }
+              
+              if (newTop < 0) {
+                newTop = 0;
+              } else if (newTop > $(this).innerHeight() - _this.outerHeight()) {
+                newTop = $(this).innerHeight() - _this.outerHeight();
+              }
+            }
+
+            _this.css({
+              left: newLeft,
+              top: newTop
+            });
+          });
+
+          $(document).mouseup(function () {
+            $(this).off();
+          });
+
+          return false;
+        });
+      }
+    });
+
+    $('#demo').drag({
+      limit: true
+    });
+  </script>
+</body>
+
+</html>

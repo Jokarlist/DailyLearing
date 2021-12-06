@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+
+<body>
+  <script>
+    var personArr = [{
+      name: '王港',
+      src: './src/img/3.png',
+      des: '颈椎不好',
+      sex: 'm',
+      age: 18
+    }, {
+      name: '刘莹',
+      src: './src/img/5.png',
+      des: '我是谁',
+      sex: 'f',
+      age: 19
+    }, {
+      name: '王秀莹',
+      src: './src/img/4.png',
+      des: '我很好看',
+      sex: 'f',
+      age: 22
+    }, {
+      name: '刘金雷',
+      src: './src/img/1.png',
+      des: '你没有见过陌生的脸',
+      sex: 'm',
+      age: 21
+    }, {
+      name: '刘飞翔',
+      src: './src/img/2.png',
+      des: '瓜皮刘',
+      sex: 'm',
+      age: 25
+    }];
+
+    // 封装forEach方法
+    /* Array.prototype.myForEach = function (callback, thisArg) {
+      var len = this.length;
+      var thisArg = arguments[1] !== undefined ? arguments[1] : window;
+
+      for (var i = 0; i < len; i++) {
+        callback.call(thisArg, this[i], i, this);
+      }
+    };
+
+    var callback = function (elem, index, self) {
+      console.log(elem, this);
+    };
+
+    personArr.myForEach(callback, {
+      age: 18
+    }); */
+
+    // 封装filter方法
+    /* Array.prototype.myFilter = function (callback, thisArg) {
+      var len = this.length;
+      var tempArr = [];
+      var thisArg = arguments[1] === undefined ? window : thisArg;
+
+      for (var i = 0; i < len; i++) {
+        callback.apply(thisArg, [this[i], i, this]) && tempArr.push(this[i]);
+      }
+
+      return tempArr;
+    };
+
+    var callback = function (elem, index, self) {
+      return elem.sex === "f";
+    };
+
+    var newArr = personArr.myFilter(callback, {
+      age: 18
+    });
+    console.log(newArr); */
+
+    // 封装map方法
+    /* Array.prototype.myMap = function (callback, thisArg) {
+      var len = this.length;
+      var tempArr = [];
+      var thisArg = arguments[1] !== undefined ? thisArg : window;
+
+      for (var i = 0; i < len; i++) {
+        tempArr.push(callback.call(thisArg, this[i], i, this));
+      }
+
+      return tempArr;
+    };
+
+    var callback = function (elem, index, self) {
+      elem.age += index;
+      console.log(this);
+
+      return elem;
+    };
+
+    var newArr = personArr.myMap(callback, {
+      text: "改变this指向"
+    });
+    console.log(newArr); */
+
+    // 封装every方法
+    /* Array.prototype.myEvery= function (callback, thisArg) {
+      var len = this.length;
+      var flag = true;
+      var thisArg = arguments[1] === undefined ? window : thisArg;
+
+      for (var i = 0; i < len; i++) {
+        if (!callback.call(thisArg, this[i], i, this)) {
+          flag = false;
+          break;
+        }
+      }
+
+      return flag;
+    };
+
+    var callback = function (elem, index, self) {
+      return elem.sex === "m" || elem.sex === "f";
+    };
+
+    var flag = personArr.myEvery(callback, {
+      text: "改变this指向" 
+    });
+    console.log(flag); */
+
+    // 封装some方法
+    /* Array.prototype.mySome= function (callback, thisArg) {
+      var len = this.length;
+      var thisArg = arguments[1] === undefined ? window : thisArg;
+
+      for (var i = 0; i < len; i++) {
+        if (callback.call(thisArg, this[i], i, this)) {
+          return true;
+        }
+      }
+
+      return false;
+    };
+
+    var callback = function (elem, index, self) {
+      return elem.sex === "b";
+    };
+
+    var flag = personArr.mySome(callback, {
+      text: "改变this指向" 
+    });
+    console.log(flag); */
+
+    // 封装reduce方法
+    /* Array.prototype.myReduce = function (callback, initialValue, thisArg) {
+      var len = this.length;
+      var thisArg = arguments[2] || window;
+      var accumulator = initialValue;
+
+      for (var i = 0; i < len; i++) {
+        accumulator = callback.apply(thisArg, [accumulator, this[i], i, this]);
+      }
+
+      return accumulator;
+    };
+
+    var parseCookie = function (cookieStr) {
+      var tempObj = {};
+      var cookieArr = cookieStr.split("; ");
+
+      return cookieArr.myReduce(function (accumulator, currentValue, index, self) {
+        currentValue = currentValue.split("=");
+        accumulator[currentValue[0]] = currentValue[1];
+
+        return accumulator;
+      }, tempObj);
+    };
+
+    var cookieStr =
+      "BIDUPSID=D8C7F45EF26CC055D4E40FA738E1F149; PSTM=1626800768; BD_UPN=12314753; BAIDUID=4EEE75F3B4044D8EB84CDF7485FC83EC:FG=1; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; BD_HOME=1; delPer=0; BD_CK_SAM=1; PSINO=7; H_PS_645EC=415eWTKEqJBIHIMjOb2oo5CCIXngDx0RDPB%2F13NKQxvw9ZN3JHBALlPA%2FKA; H_PS_PSSID=34437_34442_34145_34004_34092_26350; sugstore=1; BA_HECTOR=al0g012l21258l0kf71gic27r0q";
+    var cookieObj = parseCookie(cookieStr);
+
+    console.log(cookieObj); */
+
+    // 封装reduceRight方法
+    /* Array.prototype.myReduceRight = function (callback, initialValue, thisArg) {
+      var len = this.length;
+      var thisArg = arguments[2] || window;
+      var accumulator = initialValue;
+
+      for (var i = len - 1; i >= 0; i--) {
+        accumulator = callback.apply(thisArg, [accumulator, this[i], i, this]);
+      }
+
+      return accumulator;
+    };
+
+    var parseCookie = function (cookieStr) {
+      var tempObj = {};
+      var cookieArr = cookieStr.split("; ");
+
+      return cookieArr.myReduceRight(function (accumulator, currentValue, index, self) {
+        currentValue = currentValue.split("=");
+        accumulator[currentValue[0]] = currentValue[1];
+
+        return accumulator;
+      }, tempObj);
+    };
+
+    var cookieStr =
+      "BIDUPSID=D8C7F45EF26CC055D4E40FA738E1F149; PSTM=1626800768; BD_UPN=12314753; BAIDUID=4EEE75F3B4044D8EB84CDF7485FC83EC:FG=1; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; BD_HOME=1; delPer=0; BD_CK_SAM=1; PSINO=7; H_PS_645EC=415eWTKEqJBIHIMjOb2oo5CCIXngDx0RDPB%2F13NKQxvw9ZN3JHBALlPA%2FKA; H_PS_PSSID=34437_34442_34145_34004_34092_26350; sugstore=1; BA_HECTOR=al0g012l21258l0kf71gic27r0q";
+    var cookieObj = parseCookie(cookieStr);
+
+    console.log(cookieObj); */
+  </script>
+</body>
+
+</html>

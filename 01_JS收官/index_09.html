@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>index</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .carousel-container {
+      position: relative;
+      margin: 100px auto 0;
+      width: 400px;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .carousel-page {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2000px;
+      height: 250px;
+    }
+
+    .carousel-page>li {
+      float: left;
+      width: 400px;
+      height: 250px;
+    }
+
+    .carousel-page>li>img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .btn {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      margin-top: -20px;
+      color: #fff;
+      text-align: center;
+      line-height: 40px;
+      background-color: #000;
+      opacity: 0.1;
+      cursor: pointer;
+      caret-color: transparent;
+      user-select: none;
+    }
+
+    .carousel-container:hover .btn {
+      opacity: 0.7;
+    }
+
+    .left-btn {
+      left: 15px;
+    }
+
+    .right-btn {
+      right: 15px;
+    }
+
+    .carousel-index {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+      caret-color: transparent;
+      user-select: none;
+    }
+
+    .carousel-index>span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 10px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+
+    .carousel-index .active {
+      background-color: #f40;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="carousel-container">
+    <ul class="carousel-page">
+      <li><img src="img/cat1.jpg" alt="图片未正常显示" /></li>
+      <li><img src="img/cat2.jpg" alt="图片未正常显示" /></li>
+      <li><img src="img/cat3.jpg" alt="图片未正常显示" /></li>
+      <li><img src="img/cat4.jpg" alt="图片未正常显示" /></li>
+      <li><img src="img/cat1.jpg" alt="图片未正常显示" /></li>
+    </ul>
+    <div class="btn left-btn">&lt;</div>
+    <div class="btn right-btn">&gt;</div>
+    <div class="carousel-index">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <script>
+    var timer = null;
+    var carouselPage = document.getElementsByClassName("carousel-page")[0];
+    var moveWidth = carouselPage.children[0].offsetWidth;
+    var num = carouselPage.children.length - 1;
+    var leftBtn = document.getElementsByClassName("left-btn")[0];
+    var rightBtn = document.getElementsByClassName("right-btn")[0];
+    var oSpanArray = document.getElementsByClassName("carousel-index")[0].getElementsByTagName("span");
+    var lock = true;
+    var index = 0;
+
+    leftBtn.onclick = function () {
+      autoMove("right->left");
+    };
+
+    rightBtn.onclick = function () {
+      autoMove("left->right");
+    };
+
+    for (var i = 0; i < oSpanArray.length; i++) {
+      (function (myIndex) {
+        oSpanArray[myIndex].onclick = function () {
+          lock = false;
+          clearTimeout(timer);
+          index = myIndex;
+          startMove(carouselPage, {left: -index * moveWidth}, function () {
+            lock = true;
+            timer = setTimeout(autoMove, 1500);
+            changeIndex(index);
+          });
+        };
+      })(i);
+    }
+
+    /* direction表示轮播方向，默认或点击左按钮为“right->left”，点击右按钮则下一次方向为“left->right”*/
+    var autoMove = function (direction) {
+      if (lock) {
+        lock = false;
+        clearTimeout(timer);
+
+        if (!direction || direction === "right->left") {
+          index++;
+          startMove(carouselPage, {
+            left: carouselPage.offsetLeft - moveWidth
+          }, function () {
+            if (carouselPage.offsetLeft === -num * moveWidth) {
+              carouselPage.style.left = "0";
+              index = 0;
+            }
+
+            timer = setTimeout(autoMove, 1500);
+            lock = true;
+            changeIndex(index);
+          });
+        } else if (direction === "left->right") {
+          index--;
+          if (carouselPage.offsetLeft === 0) {
+            carouselPage.style.left = -num * moveWidth + "px";
+            index = num - 1;
+          }
+          
+          startMove(carouselPage, {
+            left: carouselPage.offsetLeft + moveWidth
+          }, function () {
+            timer = setTimeout(autoMove, 1500);
+            lock = true;
+            changeIndex(index);
+          });
+        }
+      }
+
+    };
+
+    var changeIndex = function (index) {
+      for (var i = 0; i < oSpanArray.length; i++) {
+        oSpanArray[i].className = "";
+      }
+      oSpanArray[index].className = "active";
+    };
+
+    timer = setTimeout(autoMove, 1500);
+  </script>
+
+  <script src="../工具库/tools.js"></script>
+</body>
+
+</html>

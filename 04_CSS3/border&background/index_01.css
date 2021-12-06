@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fff;
+}
+
+/* 光环 */
+/* .demo {
+  position: absolute;
+  top: calc(50% - 150px);
+  left: calc(50% - 150px);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 20px #fff,
+              inset 20px 0 70px #f0f,
+              inset -20px 0 70px #0ff,
+              inset 20px 0 115px #f0f,
+              inset -20px 0 115px #0ff,
+              0 0 20px #fff,
+              -10px 0 30px #f0f,
+              10px 0 30px #0ff,
+              -15px 0 50px #f0f,
+              15px 0 50px #0ff;
+} */
+
+/* 日晕 */
+/* .demo {
+  position: absolute;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 60px 50px #fff,
+              0 0 110px 105px #ff0;
+} */
+
+/* 弹块 */
+.demo {
+  position: absolute;
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  transition: all .6s;
+}
+
+.demo:hover {
+  transform: scale(1.25, 1.25);
+}
+
+.demo::after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  content: "";
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+  opacity: 0;
+  transition: all .6s;
+}
+
+.demo:hover::after {
+  opacity: 1;
+}

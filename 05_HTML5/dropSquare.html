@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下落方块</title>
+  <style>
+    canvas {
+      width: 500px;
+      height: 300px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="500px" height="300px"></canvas>
+
+  <script>
+    var cnv = document.getElementById("canvas");
+    var ctx = cnv.getContext("2d");
+    var height = 50;
+    var speed = 5;
+    var g = 1.2;
+    var limit = parseInt(cnv.getAttribute("height"));
+
+    ctx.strokeStyle = "cornflowerblue";
+    timer = setInterval(function () {
+      ctx.clearRect(0, 0, 500, 300);
+      ctx.strokeRect(50, height, 50, 50);
+      height += speed += g;
+      
+      if (height + 50 >= limit) {
+        speed *= -0.8;
+        height = limit - 50;
+      }
+    }, 1000 / 30);
+  </script>
+</body>
+</html>

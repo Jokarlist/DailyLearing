@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简易播放器</title>
+  <link rel="stylesheet" href="videoPlayer.css">
+</head>
+
+<body>
+  <div class="video-player">
+    <video src="VID_20210404_120214.mp4"></video>
+    <div class="menu">
+      <div class="play-btn">播放</div>
+      <div class="playtime">0:00/0:00</div>
+      <div class="progress-bar">
+        <div></div>
+        <i></i>
+      </div>
+      <div class="speed">倍速</div>
+      <div class="speed-options" style="display: none;">
+        <ul>
+          <li>正常</li>
+          <li>x1.25</li>
+          <li>x1.5</li>
+          <li>x2.0</li>
+        </ul>
+      </div>
+      <div class="vol-plus">音量加</div>
+      <div class="vol-minus">音量减</div>
+      <div class="fullscreen">全屏</div>
+    </div>
+  </div>
+
+  <script>
+    var videoPlayer = document.getElementsByClassName("video-player")[0];
+    var video = document.getElementsByTagName("video")[0];
+    var menu = document.getElementsByClassName("menu")[0];
+    var playBtn = document.getElementsByClassName("play-btn")[0];
+    var playtime = document.getElementsByClassName("playtime")[0];
+    var progressBar = document.getElementsByClassName("progress-bar")[0];
+    var curProgress = progressBar.getElementsByTagName("div")[0];
+    var curPoint = progressBar.getElementsByTagName("i")[0];
+    var speed = document.getElementsByClassName("speed")[0];
+    var speedOptions = document.getElementsByClassName("speed-options")[0];
+    var liArr = speedOptions.getElementsByTagName("li");
+    var volPlusBtn = document.getElementsByClassName("vol-plus")[0];
+    var volMinusBtn = document.getElementsByClassName("vol-minus")[0];
+    var fullScreenBtn = document.getElementsByClassName("fullscreen")[0];
+    var hoverTimer = null;
+
+    videoPlayer.onmouseenter = hoverTime;
+    videoPlayer.onclick = hoverTime;
+    videoPlayer.onmouseleave = function () {
+      menu.style.display = "none";
+    };
+
+    function hoverTime() {
+      clearTimeout(hoverTimer);
+      menu.style.display = "block";
+
+      hoverTimer = setTimeout(function () {
+        menu.style.display = "none";
+      }, 2000);
+    }
+
+    playBtn.onclick = function () {
+      if (video.paused) {
+        video.play();
+        this.innerText = "暂停";
+      } else {
+        video.pause();
+        this.innerText = "播放";
+      }
+    };
+
+    progressBar.onmouseenter = function () {
+      this.style.height = "14px";
+      this.style.top = "-14px";
+      curProgress.style.height = "14px";
+      curPoint.style.height = "18px";
+    };
+    progressBar.onmouseleave = function () {
+      this.style.height = "2px";
+      this.style.top = "-2px";
+      curProgress.style.height = "2px";
+      curPoint.style.height = "6px";
+    };
+
+    progressBar.onclick = function (e) {
+      var location = e.layerX;
+      var width = progressBar.clientWidth;
+
+      video.currentTime = location / width * video.duration;
+    };
+
+    speed.onclick = function () {
+      if (speedOptions.style.display === "none") {
+        speedOptions.style.display = "block";
+      } else {
+        speedOptions.style.display = "none";
+      }
+    };
+    speedOptions.onmouseleave = function () {
+      speedOptions.style.display = "none";
+    };
+
+    [].forEach.call(liArr, function (item, index) {
+      item.index = index;
+      item.onclick = function () {
+        switch (item.index) {
+          case 0:
+            video.playbackRate = 1;
+            speed.innerText = "倍速";
+            break;
+          case 1:
+            video.playbackRate = 1.25;
+            speed.innerText = "x1.25";
+            break;
+          case 2:
+            video.playbackRate = 1.5;
+            speed.innerText = "x1.5";
+            break;
+          case 3:
+            video.playbackRate = 2;
+            speed.innerText = "x2.0";
+            break;
+        }
+      };
+    });
+
+    volPlusBtn.onclick = function () {
+      /* if (video.volume + .1 > 1) {
+        video.volume = 1;
+      } else {
+        video.volume += .1;
+      } */
+      video.volume += video.volume + .1 > 1 ? 1 : .1;
+    };
+    volMinusBtn.onclick = function () {
+      /*  if (video.volume - .1 < 0) {
+         video.volume = 0;
+       } else {
+         video.volume -= .1;
+       } */
+      video.volume -= video.volume - .1 < 0 ? 0 : .1;
+    };
+
+    fullScreenBtn.onclick = function () {
+      var rootElem = document.documentElement;
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        this.style.width = "60px";
+        this.innerText = "全屏";
+        videoPlayer.style.width = "800px";
+        videoPlayer.style.height = "500px";
+      } else {
+        rootElem.requestFullscreen();
+        this.style.width = "80px";
+        this.innerText = "退出全屏";
+        videoPlayer.style.height = "100%";
+        videoPlayer.style.width = "100%";
+      }
+    };
+
+    setInterval(function () {
+      var duration = video.duration;
+      var curTime = video.currentTime;
+      var curWidth = curTime / duration * progressBar.clientWidth;
+
+      playtime.innerHTML = parseInt(curTime / 60) + ":" + parseInt(curTime % 60) + "/" + parseInt(duration / 60) +
+        ":" + parseInt(duration % 60);
+
+      curProgress.style.width = curWidth + "px";
+      curPoint.style.left = curWidth + "px";
+    }, 1000);
+  </script>
+</body>
+
+</html>
