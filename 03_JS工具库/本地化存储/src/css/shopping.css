@@ -1,0 +1,202 @@
+dl,
+dd,
+p {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0;
+}
+
+input {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+label {
+  vertical-align: middle;
+}
+
+body {
+  font-family: "微软雅黑";
+}
+
+img {
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+}
+
+.clearfix::after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+#shopping {
+  width: 1000px;
+  margin: 100px auto;
+}
+
+#shopping table {
+  width: 100%;
+}
+
+/* #shopping th{
+	height: 50px;
+	color: #333;
+	font-size: 16px;
+	font-weight: normal;
+} */
+#shopping img {
+  background-color: #f4f4f4;
+  border: 1px solid #eaeaea;
+}
+
+.product {
+  border: 1px solid #ddd;
+}
+
+.product tr {
+  border-bottom: 1px dashed #ddd;
+}
+
+.product tr:hover,
+.product tr.active {
+  background-color: #fffbf0;
+}
+
+.product td {
+  padding: 15px 0;
+  text-align: center;
+}
+
+.product td:nth-of-type(1) {
+  width: 180px;
+}
+
+.product td:nth-of-type(2) {
+  width: 300px;
+  text-align: left;
+}
+
+.product td:nth-of-type(5) button {
+  height: 50px;
+  padding: 0 20px;
+  color: #fff;
+  background-color: #cb4a61;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.product p {
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: bold;
+}
+
+.product .color span {
+  display: inline-block;
+  width: 54px;
+  height: 26px;
+  margin-right: 10px;
+  line-height: 26px;
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.product .color span.active {
+  border: 2px solid #b4a078;
+  line-height: 24px;
+  background: url("../img/ico_02.gif") no-repeat right bottom;
+}
+
+.product td:nth-of-type(3) {
+  width: 200px;
+  color: #d90808;
+}
+
+.product td:nth-of-type(4) {
+  width: 200px;
+  font-size: 0;
+}
+
+.product td:nth-of-type(4) span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  font-size: 14px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.product td:nth-of-type(4) strong {
+  display: inline-block;
+  width: 58px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.product td:nth-of-type(5) {
+  width: 200px;
+  color: #d90808;
+}
+
+.selected {
+  margin-top: 30px;
+  border: 1px solid #ddd;
+}
+
+.selected thead {
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+}
+
+.selected th {
+  height: 50px;
+}
+
+.selected th span,
+.selected th strong {
+  vertical-align: middle;
+}
+
+.selected th strong {
+  color: #d90808;
+  font-size: 24px;
+}
+
+.selected tbody {
+  font-size: 14px;
+  color: #999;
+}
+
+.selected tr {
+  border-bottom: 1px dashed #ddd;
+}
+
+.selected td {
+  padding: 15px 0;
+  text-align: center;
+}

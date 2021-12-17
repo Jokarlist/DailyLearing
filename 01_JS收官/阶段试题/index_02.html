@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+
+<body>
+  <script>
+    /* 用你能想到较好的，且通用方式把浏览器输入框上的网址，如："https://www.baidu.com/s?ie=utf-8&f=8"。按以下几个部分划分并且创建对象：
+      协议：https  
+      主机：www.baidu.com 
+      路径：/s 
+      参数：ie=utf-8&f=8
+    此对象属性和属性值形式如下：
+    {
+      protocol:  'https',  
+      host：'www.baidu.com', 
+      path: '/s',  
+      search: {ie:'utf-8',f:'8'}
+    } */
+
+    var mySplit = function (url) {
+      var obj = {
+        protocol: null,
+        host: null,
+        path: null,
+        search: null,
+      };
+      var tempArr = null;
+      var tempObj = {};
+
+      tempArr = url.split("://");
+      obj.protocol = tempArr[0];
+      tempArr = tempArr[1].split("/");
+      obj.host = tempArr[0];
+      tempArr = tempArr[1].split("?");
+      obj.path = "/" + tempArr[0];
+      tempArr = tempArr[1].split("&");
+
+      tempArr.forEach(function (item) {
+        var tempItem = null;
+
+        tempItem = item.split("=");
+        tempObj[tempItem[0]] = tempItem[1];
+      });
+      obj.search = tempObj;
+
+      return obj;
+    };
+
+    console.log(mySplit(
+      "https://www.baidu.com/s?wd=%E6%9D%8E%E5%BD%A6%E5%AE%8F&usm=4&ie=utf-8&rsv_cq=%E7%99%BE%E5%BA%A6&rsv_dl=0_right_recommends_merge_20826&rsv_pq=9267af2f000a15bf&oq=%E7%99%BE%E5%BA%A6&rsv_t=b4e6pjOk4DLUk%2FJL35NElojOkC474bcpJ647vVJNQVn4onNls92Cp8bzP1o&euri=b1f02a70c8e5407bbee068f493457e51"
+    ));
+  </script>
+</body>
+
+</html>

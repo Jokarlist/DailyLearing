@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img src="" alt="" id="imgAvatar" />
+    <input type="file" id="avatar" />
+    <button>上传</button>
+
+    <script>
+      async function upload() {
+        const inp = document.getElementById("avatar");
+
+        if (inp.files.length === 0) {
+          alert("请选择要上传的图片");
+          return;
+        }
+
+        const formData = new FormData();
+
+        formData.append("imagefile", inp.files[0]);
+
+        const url = "http://study.yuanjin.tech/api/upload";
+        const res = await fetch(url, {
+          method: "POST",
+          body: formData, // 配置body之后fetch会自动配置headers里的Content-Type
+        });
+        const result = await res.json();
+
+        return result;
+      }
+
+      document.querySelector("button").onclick = async function () {
+        const result = await upload();
+
+        document.getElementById("imgAvatar").src = result.path;
+      };
+    </script>
+  </body>
+</html>

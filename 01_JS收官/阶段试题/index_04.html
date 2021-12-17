@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+
+<body>
+  <div id="demo" style="width: 100px; height: 100px; background-color: cornflowerblue;"></div>
+
+  <script>
+    var timer = null;
+
+    demo.onclick = function () {
+      changeOpacity(this, 0.5);
+    };
+
+    var changeOpacity = function (elem, target) {
+      clearInterval(timer);
+
+      var iCur = null
+      var iSpeed = null;
+
+      timer = setInterval(function () {
+        iCur = parseFloat(window.getComputedStyle(elem, null)["opacity"]) * 100;
+        iSpeed = (target * 100 - iCur) / 7;
+        iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+        if (iCur / 100 === target) {
+          clearInterval(timer);
+        } else {
+          elem.style.opacity = (iCur + iSpeed) / 100 + "";
+        }
+      }, 30);
+    };
+  </script>
+</body>
+
+</html>
