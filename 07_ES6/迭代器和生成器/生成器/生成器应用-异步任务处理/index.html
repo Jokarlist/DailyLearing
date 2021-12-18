@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function* task() {
+      const a = yield 1;
+
+      console.log(a);
+
+      const res = yield fetch("http://study.yuanjin.tech/api/local");
+      const result = yield res.json();
+
+      console.log(result);
+    }
+
+    run(task);
+
+    function run(generatorFunc) {
+      const generator = generatorFunc();
+      let result = generator.next();
+
+      handleResult();
+
+      function handleResult() {
+        // 迭代已完成，不处理结果
+        if (result.done) {
+          return;
+        }
+        // 迭代未完成，分两种情况处理结果
+        if (typeof result.value.then === "function") {
+          // 迭代返回的数据是一个Promise对象
+          // 等待Promise完成之后再进行下一次迭代
+          result.value.then(
+            data => {
+              result = generator.next(data);
+              handleResult();
+            },
+            reason => {
+              result = generator.throw(reason);
+              handleResult();
+            }
+          );
+        } else {
+          // 迭代返回的数据为其它类型数据
+          result = generator.next(result.value);
+          handleResult();
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

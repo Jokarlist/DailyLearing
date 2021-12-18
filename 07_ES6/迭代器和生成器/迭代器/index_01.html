@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /* const arr1 = [1, 2, 3, 4, 5];
+      const arr2 = [6, 7, 8, 9];
+      
+      // 创建数组迭代器函数
+      function createArrayIterator(arr) {
+        let index = 0;
+
+        return {
+          next() {
+            return {
+              done: index >= arr.length,
+              value: arr[index++]
+            }
+          }
+        }
+      }
+
+      const iterator1 = createArrayIterator(arr1);
+      const iterator2 = createArrayIterator(arr2); */
+
+      // 常见斐波那契数列迭代器
+      function createFibonacciIterator() {
+        let prev1 = 1; // 当前位置的前一位
+        let prev2 = 1; // 当前位置的前二位
+        let count = 1; // 当前位置索引
+
+        return {
+          next() {
+            const result = {
+              value: count <= 2 ? 1 : prev1 + prev2,
+              done: false,
+            };
+
+            prev2 = prev1;
+            prev1 = result.value;
+            count++;
+
+            return result;
+          },
+        };
+      }
+
+      const fiboIter = createFibonacciIterator();
+    </script>
+  </body>
+</html>
