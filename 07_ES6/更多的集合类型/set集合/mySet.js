@@ -1,13 +1,13 @@
 const isEqual = Symbol();
 
 class MySet {
-  constructor(iterator = []) {
-    if (!typeof iterator[Symbol.iterator] === "function") {
-      throw new Error(`传入的${iterator}参数不是一个可迭代对象`);
+  constructor(iterable = []) {
+    if (typeof iterable[Symbol.iterator] !== "function") {
+      throw new Error(`传入的${iterable}参数不是一个可迭代对象`);
     }
 
     this._datas = [];
-    for (const item of iterator) {
+    for (const item of iterable) {
       this.add(item);
     }
   }
