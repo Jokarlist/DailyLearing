@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sum(...args) {
+      return args.reduce((prev, cur) => {
+        return prev + cur;
+      });
+    }
+
+    function ValidateFunction(func, ...types) {
+      return new Proxy(func, {
+        apply(target, thisArgument, argumentsList) {
+          argumentsList.forEach((arg, index) => {
+            if (typeof arg !== types[index]) {
+              throw new TypeError(`第${index + 1}个参数${arg}不是${types[index]}类型`);
+            }
+          });
+
+          return Reflect.apply(target, thisArgument, argumentsList);
+        }
+      });
+    }
+
+    const sumProxy = ValidateFunction(sum, "number", "number", "number");
+
+    console.log(sumProxy(1, 2, 3));
+  </script>
+</body>
+
+</html>

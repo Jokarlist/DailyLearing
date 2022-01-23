@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class User {}
+
+    function ConstructorProxy(Class, ...propNames) {
+      return new Proxy(Class, {
+        construct(target, argumentsList) {
+          const obj = Reflect.construct(target, argumentsList);
+
+          propNames.forEach((prop, index) => {
+            obj[prop] = argumentsList[index];
+          });
+
+          return obj;
+        }
+      });
+    }
+
+    const UserProxy = ConstructorProxy(User, "firstName", "lastName", "age");
+
+    console.log(new UserProxy("香", "权", 21));
+  </script>
+</body>
+
+</html>
