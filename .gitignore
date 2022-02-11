@@ -1,2 +1,4 @@
 # 忽略测试服务器文件
 TestWebServer/
+# 忽略开发环境的模块文件
+node_modules/
