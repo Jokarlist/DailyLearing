@@ -2,5 +2,5 @@
 TestWebServer/
 # 忽略开发环境的模块文件
 node_modules/
-# 忽略构建后的源文件
+# 忽略构建生成的源文件
 dist/

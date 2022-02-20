@@ -4,19 +4,20 @@ module.exports = class {
   }
 
   apply(compiler) {
-    compiler.hooks.emit.tap("FileListPlugin", (compilation) => {
+    compiler.hooks.emit.tap("FileListPlugin", (complation) => {
       const fileList = [];
 
-      for (const key in compilation.assets) {
+      for (const key in complation.assets) {
         const content = `【${key}】\n大小：${
-          compilation.assets[key].size() / 1024
+          complation.assets[key].size() / 1024
         }KB`;
 
         fileList.push(content);
       }
 
       const str = fileList.join("\n\n");
-      compilation.assets[this.filename] = {
+
+      complation.assets[this.filename] = {
         source() {
           return str;
         },
