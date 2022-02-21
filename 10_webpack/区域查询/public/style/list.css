@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  width: 800px;
+  margin: 20px auto;
+  line-height: 2;
+  justify-content: space-between;
+}
+
+.china-map {
+  width: 340px;
+  height: 248px;
+  background: url("../img/china.jpg");
+  background-size: 100% 100%;
+}
+
+.provinces {
+  display: flex;
+  width: 450px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.provinces li {
+  margin: 0 10px;
+}
+
+.provinces a {
+  display: block;
+  text-decoration: none;
+}
+
+.provinces a:hover {
+  color: #f40;
+}
