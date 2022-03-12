@@ -1,0 +1,18 @@
+// 提供混合样式
+
+// 自我在父级容器中居中
+.self-center(@pos: absolute) {
+  position: @pos;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 自我在父级容器中拉伸填充满
+.self-fill(@pos: absolute) {
+  position: @pos;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
