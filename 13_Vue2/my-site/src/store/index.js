@@ -5,6 +5,7 @@ import setting from "./setting";
 import about from "./about";
 import project from "./project";
 
+// 若是用CDN引入相关模块则会在全局暴露一个变量，因此可以用来判断是否是CDN引入方式
 if (!window.Vuex) {
   install(Vue);
 }
