@@ -11,7 +11,10 @@ export default {
   setup() {
     const gdp = ref([]);
     async function fetchGdp() {
-      gdp.value = await fetch("/api/gdp.json").then((res) => res.json());
+      // gdp.value = await fetch("/api/gdp.json").then((res) => res.json());
+      gdp.value.push(
+        ...(await fetch("/api/gdp.json").then((res) => res.json()))
+      );
     }
 
     fetchGdp();

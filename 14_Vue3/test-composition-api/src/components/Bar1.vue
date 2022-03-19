@@ -1,14 +1,13 @@
 <script>
 import useGdp from "../composition/useGdp";
-import { computed } from "vue";
+import { ref } from "vue";
 
 export default {
   props: ["gdp"],
   setup(props) {
-    const gdp = computed(() => props.gdp);
-
+    // const gdp = computed(() => props.gdp);
     return {
-      ...useGdp(gdp, 400),
+      ...useGdp(ref(props.gdp), 400),
     };
   },
 };
