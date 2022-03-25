@@ -43,9 +43,12 @@ export default {
   },
   data() {
     return {
-      index: 0, // 指示当前的轮播图页
-      containerHeight: 0, // 主容器的当前高度
-      switching: false, // 指示轮播图是否处于切换状态
+      // 指示当前的轮播图页
+      index: 0,
+      // 主容器的当前高度
+      containerHeight: 0,
+      // 指示轮播图是否处于切换状态
+      switching: false,
     };
   },
   computed: {

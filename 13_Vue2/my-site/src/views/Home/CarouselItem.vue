@@ -29,10 +29,14 @@ export default {
     return {
       titleWidth: 0,
       descWidth: 0,
-      containerSize: null, // 最外层容器的尺寸
-      innerSize: null, // 内层图片容器的尺寸
-      mouseX: 0, // 鼠标相对图片容器的落点x位置
-      mouseY: 0, // 鼠标相对图片容器的落点y位置
+      // 最外层容器的尺寸
+      containerSize: null,
+      // 内层图片容器的尺寸
+      innerSize: null,
+      // 鼠标相对图片容器的落点x位置
+      mouseX: 0,
+      // 鼠标相对图片容器的落点y位置
+      mouseY: 0,
     };
   },
   mounted() {
@@ -47,7 +51,7 @@ export default {
     window.removeEventListener("resize", this.setSize);
   },
   computed: {
-    /* 获取图片放置坐标 */
+    // 获取图片放置坐标
     imagePosition() {
       if (!this.innerSize || !this.containerSize) {
         return;
@@ -61,7 +65,7 @@ export default {
         transform: `translate(${left}px, ${top}px)`,
       };
     },
-    /* 初始化正中间位置 */
+    // 初始化正中间位置
     initCenter() {
       return {
         x: this.containerSize.width / 2,
@@ -72,7 +76,6 @@ export default {
   methods: {
     handleMouseMove(e) {
       const rect = this.$refs.container.getBoundingClientRect();
-
       this.mouseX = e.clientX - rect.left;
       this.mouseY = e.clientY - rect.top;
     },
@@ -80,7 +83,7 @@ export default {
       this.mouseX = this.initCenter.x;
       this.mouseY = this.initCenter.y;
     },
-    /* 获取各种尺寸 */
+    // 获取各种尺寸
     setSize() {
       this.containerSize = {
         width: this.$refs.container.clientWidth,
@@ -91,11 +94,10 @@ export default {
         height: this.$refs.image.clientHeight,
       };
     },
-    /* 显示图片附带的标题和描述内容 */
+    // 显示图片附带的标题和描述内容
     showWords() {
       const title = this.$refs.title;
       const desc = this.$refs.desc;
-
       title.style.width = 0;
       title.style.opacity = 1;
       title.clientWidth;
