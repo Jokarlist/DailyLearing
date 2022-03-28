@@ -1,0 +1,35 @@
+<template>
+  <div class="home-container">
+    <Menu />
+    <div
+      class="main-content"
+      :class="{ 'menu-collapsed': $store.state.collapsed }"
+    >
+      <TopBar />
+      <router-view></router-view>
+    </div>
+  </div>
+</template>
+
+<script>
+import Menu from "./components/Menu.vue";
+import TopBar from "./components/TopBar.vue";
+
+export default {
+  components: {
+    Menu,
+    TopBar,
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.main-content {
+  margin-left: 180px;
+  transition: margin, .3s;
+  
+  &.menu-collapsed {
+    margin-left: 80px;
+  }
+}
+</style>
