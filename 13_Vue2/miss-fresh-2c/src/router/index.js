@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import routes from "./routes";
+import { routes, appendRoutes } from "./routes";
 import store from "@/store";
+import { routeFilter } from "@/utils";
 
 Vue.use(VueRouter);
 
@@ -10,14 +11,24 @@ const router = new VueRouter({
   routes,
 });
 
+let isAppend = false;
 router.beforeEach((to, from, next) => {
   if (to.path !== "/login") {
     const userInfo = store.state.userInfo;
-    if (userInfo.appkey && userInfo.username && userInfo.role && userInfo.email) {
+    if (userInfo.appkey && userInfo.username && userInfo.role) {
+      if (!isAppend) {
+        const filteredRoutes = routeFilter(userInfo.role, appendRoutes);
+        router.addRoutes(filteredRoutes);
+        store.commit(
+          "routeRecords/setRouteRecords",
+          routes.concat(filteredRoutes)
+        );
+        isAppend = true;
+      }
       return next();
-    } else {
-      return next("/login");
     }
+
+    return next("/login");
   }
 
   return next();

@@ -84,7 +84,7 @@ export default {
             .then((res) => {
               console.log(res);
               this.$store.dispatch("userInfo/login", res);
-              this.$router.push({ name: "Home" });
+              this.$router.push({ name: "Layout" });
               this.submitting = false;
             })
             .catch((error) => {

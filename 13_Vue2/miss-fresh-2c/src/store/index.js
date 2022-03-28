@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { install, Store } from "vuex";
 import userInfo from "./userInfo";
+import routeRecords from "./routeRecords";
 
 install(Vue);
 
@@ -22,5 +23,6 @@ export default new Store({
   strict: true,
   modules: {
     userInfo,
+    routeRecords,
   },
 });

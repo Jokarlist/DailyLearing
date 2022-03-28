@@ -1,5 +1,7 @@
 <template>
-  <h1>About</h1>
+  <div class="product-add-container">
+    <h1>新增商品</h1>
+  </div>
 </template>
 
 <script>

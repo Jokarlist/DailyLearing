@@ -23,7 +23,8 @@ instance.interceptors.response.use(
 
     const result = res.data.data;
     if (result.role === "coustomer") {
-      result.role = "customer";
+      // result.role = "customer";
+      result.role = "admin";
     }
 
     return result;

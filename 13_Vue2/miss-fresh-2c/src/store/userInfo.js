@@ -1,8 +1,4 @@
-import {
-  setUserCookies,
-  getUserCookies,
-  removeUserCookies,
-} from "@/utils/userCookies";
+import { setUserCookies, getUserCookies, removeUserCookies } from "@/utils";
 
 export default {
   namespaced: true,
