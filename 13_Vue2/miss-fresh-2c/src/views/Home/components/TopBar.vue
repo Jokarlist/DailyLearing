@@ -17,10 +17,10 @@
     </div>
     <ul class="user-info">
       <li>
-        欢迎&nbsp;高岭之皂
+        欢迎&nbsp;{{ $store.state.userInfo.username }}
         <a-icon type="down" />
       </li>
-      <li>退出</li>
+      <li @click="handleLogout">退出</li>
     </ul>
   </div>
 </template>
@@ -30,6 +30,10 @@ export default {
   methods: {
     toggleCollapsed() {
       this.$store.dispatch("toggleCollapsed");
+    },
+    handleLogout() {
+      this.$store.dispatch("userInfo/logout");
+      this.$router.push({ name: "Login" });
     },
   },
 };

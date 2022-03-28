@@ -7,10 +7,14 @@
       v-bind="layout"
     >
       <a-form-model-item has-feedback label="邮箱" prop="email">
-        <a-input v-model="loginForm.email" />
+        <a-input v-model="loginForm.email" autocomplete="on" />
       </a-form-model-item>
       <a-form-model-item has-feedback label="密码" prop="password">
-        <a-input v-model="loginForm.password" type="password" />
+        <a-input
+          v-model="loginForm.password"
+          type="password"
+          autocomplete="current-password"
+        />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button
@@ -79,6 +83,7 @@ export default {
             .login(this.loginForm)
             .then((res) => {
               console.log(res);
+              this.$store.dispatch("userInfo/login", res);
               this.$router.push({ name: "Home" });
               this.submitting = false;
             })
