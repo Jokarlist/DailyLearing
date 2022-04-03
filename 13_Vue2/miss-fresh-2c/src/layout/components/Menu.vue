@@ -1,24 +1,33 @@
 <template>
   <div style="width: 180px" class="menu-container">
     <a-menu
-      :default-selected-keys="['1']"
-      :default-open-keys="['sub1']"
+      :default-selected-keys="[
+        $router.currentRoute.matched[1]
+          ? $router.currentRoute.matched[1].name
+          : '',
+      ]"
+      :default-open-keys="[$router.currentRoute.matched[0].name]"
       mode="inline"
       theme="dark"
       :inline-collapsed="$store.state.collapsed"
     >
-      <a-sub-menu
-        v-for="item in $store.state.routeRecords.routeRecords"
-        :key="item.name"
-      >
-        <span slot="title">
-          <a-icon type="mail" />
-          <span>{{ item.meta.title }}</span>
-        </span>
-        <a-menu-item v-for="item in item.children" :key="item.name">{{
-          item.meta.title
-        }}</a-menu-item>
-      </a-sub-menu>
+      <template v-for="route in $store.state.routeRecords.routeRecords">
+        <a-sub-menu :key="route.name" v-if="!route.meta.hidden">
+          <span slot="title">
+            <a-icon :type="route.meta.icon" />
+            <span>{{ route.meta.title }}</span>
+          </span>
+          <a-menu-item
+            v-for="childRoute in route.children"
+            :key="childRoute.name"
+          >
+            <router-link :to="{ name: childRoute.name }">
+              <a-icon :type="childRoute.meta.icon" />
+              {{ childRoute.meta.title }}
+            </router-link>
+          </a-menu-item>
+        </a-sub-menu>
+      </template>
     </a-menu>
   </div>
 </template>

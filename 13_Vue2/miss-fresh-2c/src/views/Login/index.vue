@@ -82,7 +82,6 @@ export default {
           userAPI
             .login(this.loginForm)
             .then((res) => {
-              console.log(res);
               this.$store.dispatch("userInfo/login", res);
               this.$router.push({ name: "Layout" });
               this.submitting = false;

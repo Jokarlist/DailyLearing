@@ -8,4 +8,9 @@ export default {
       state.routeRecords = payload;
     },
   },
+  actions: {
+    setRouteRecords({ commit }, payload) {
+      commit("setRouteRecords", payload);
+    },
+  },
 };

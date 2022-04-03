@@ -18,13 +18,18 @@ router.beforeEach((to, from, next) => {
     if (userInfo.appkey && userInfo.username && userInfo.role) {
       if (!isAppend) {
         const filteredRoutes = routeFilter(userInfo.role, appendRoutes);
-        router.addRoutes(filteredRoutes);
-        store.commit(
-          "routeRecords/setRouteRecords",
-          routes.concat(filteredRoutes)
-        );
+        store
+          .dispatch(
+            "routeRecords/setRouteRecords",
+            routes.concat(filteredRoutes)
+          )
+          .then(() => {
+            router.addRoutes(filteredRoutes);
+            return next();
+          });
         isAppend = true;
       }
+
       return next();
     }
 
