@@ -1,8 +1,14 @@
 const fileds = {
   // 用于过滤路由记录数组的“顾客”过滤字段
-  customer: ["Product", "ProductList", "ProductAdd"],
+  customer: ["Product", "ProductList", "ProductAdd", "ProductEdit"],
   // 用于过滤路由记录数组的“管理员”过滤字段
-  admin: ["Product", "ProductList", "ProductAdd", "ProductCategory"],
+  admin: [
+    "Product",
+    "ProductList",
+    "ProductAdd",
+    "ProductCategory",
+    "ProductEdit",
+  ],
 };
 
 /**

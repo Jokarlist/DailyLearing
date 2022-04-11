@@ -1,15 +1,21 @@
 <template>
   <div class="stat-container">
-    <h1>统计</h1>
+    <Card />
+    <Chart />
   </div>
 </template>
 
 <script>
-export default {
+import Card from "./Card";
+import Chart from "./Chart";
 
-}
+export default {
+  components: {
+    Card,
+    Chart,
+  },
+};
 </script>
 
 <style>
-
 </style>

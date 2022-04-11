@@ -9,9 +9,9 @@
     </a-button>
     <div class="breadcrumb">
       <a-breadcrumb>
-        <a-breadcrumb-item>首页</a-breadcrumb-item>
+        <a-breadcrumb-item>{{ title }}</a-breadcrumb-item>
         <a-breadcrumb-item>
-          <a href="">统计</a>
+          <router-link :to="{ name: subtitleLink }">{{ subtitle }}</router-link>
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
@@ -27,6 +27,17 @@
 
 <script>
 export default {
+  computed: {
+    title() {
+      return this.$route.matched[0].meta.title;
+    },
+    subtitle() {
+      return this.$route.matched[1] ? this.$route.matched[1].meta.title : "";
+    },
+    subtitleLink() {
+      return this.$route.matched[1] ? this.$route.matched[1].name : "";
+    },
+  },
   methods: {
     toggleCollapsed() {
       this.$store.dispatch("toggleCollapsed");
@@ -52,6 +63,7 @@ export default {
   }
 
   .user-info {
+    position: relative;
     float: right;
     text-align: center;
     cursor: pointer;
@@ -60,11 +72,14 @@ export default {
       padding: 0 20px;
 
       &:last-child {
+        position: absolute;
+        right: 40px;
         display: none;
-
+        z-index: 99;
+        
         &:hover {
-          background: #eee;
           color: #999;
+          backdrop-filter: blur(3px);
           font-weight: 700;
         }
       }

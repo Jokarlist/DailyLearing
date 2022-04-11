@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container">
-    <Menu />
+    <Menu :key="reRenderKey" />
     <div
       class="main-content"
       :class="{ 'menu-collapsed': $store.state.collapsed }"
@@ -20,14 +20,24 @@ export default {
     Menu,
     TopBar,
   },
+  data() {
+    return {
+      reRenderKey: Date.now() + "",
+    };
+  },
+  watch: {
+    ["$route.matched"]() {
+      this.reRenderKey = Date.now() + "";
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .main-content {
   margin-left: 180px;
-  transition: margin, .3s;
-  
+  transition: margin, 0.3s;
+
   &.menu-collapsed {
     margin-left: 80px;
   }
