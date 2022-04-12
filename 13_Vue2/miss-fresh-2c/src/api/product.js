@@ -23,3 +23,27 @@ export async function getProductList(params) {
 export async function deleteProduct(id) {
   return await axiosIns.delete(`/products/${id}`);
 }
+
+/**
+ * 新增单个产品
+ * @param {object} params 发送请求传递的参数
+ */
+export async function addProduct(params) {
+  return await axiosIns.post("/products/add", params);
+}
+
+/**
+ * 获取商品详情
+ * @param {string} id 需查询的商品的id
+ */
+export async function getProductDetail(id) {
+  return await axiosIns.get(`/products/${id}`);
+}
+
+/**
+ * 编辑单个商品
+ * @param {object} params 发送请求传递的参数
+ */
+export async function editProduct(params) {
+  return await axiosIns.put("/products/edit", params);
+}

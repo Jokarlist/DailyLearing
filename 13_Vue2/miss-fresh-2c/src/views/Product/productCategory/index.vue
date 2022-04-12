@@ -1,6 +1,6 @@
 <template>
   <div class="product-category-container">
-    <h1>商品分类</h1>
+    <h1>类目管理</h1>
   </div>
 </template>
 
