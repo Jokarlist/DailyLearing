@@ -4,7 +4,7 @@ const BundleAnalyzerPlugin =
 if (process.env.NODE_ENV === "production") {
   module.exports = {
     devtool: false,
-    plugins: [new BundleAnalyzerPlugin()], 
+    // plugins: [new BundleAnalyzerPlugin()], 
     externals: {
       vue: "Vue",
       vuex: "Vuex",

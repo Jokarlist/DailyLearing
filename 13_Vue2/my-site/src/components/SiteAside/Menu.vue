@@ -2,7 +2,7 @@
   <div class="menu-container">
     <RouterLink
       v-for="item in items"
-      :key="item.link"
+      :key="item.icon"
       :to="{ name: item.name }"
       :exact="item.exact"
       active-class="selected"

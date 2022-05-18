@@ -1,4 +1,4 @@
-import loadingUrl from "@/assets/loading.svg";
+import loadingURL from "@/assets/loading.svg";
 import styles from "./loading.module.less";
 
 function getLoadingImage(el) {
@@ -9,7 +9,7 @@ function createLoadingImage() {
   const img = document.createElement("img");
 
   img.dataset.role = "loading";
-  img.src = loadingUrl;
+  img.src = loadingURL;
   img.className = styles.loading;
 
   return img;

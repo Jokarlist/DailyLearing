@@ -8,7 +8,7 @@ export async function postMessage(messageInfo) {
 }
 
 /**
- * 
+ * 分页获取留言
  * @param {number} page 页码
  * @param {number} limit 页容量
  */

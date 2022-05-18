@@ -59,8 +59,8 @@ export default {
 
       const extraWidth = this.innerSize.width - this.containerSize.width;
       const extraHeight = this.innerSize.height - this.containerSize.height;
-      const left = (-extraWidth / this.containerSize.width) * this.mouseX;
-      const top = (-extraHeight / this.containerSize.height) * this.mouseY;
+      const left = (this.mouseX / this.containerSize.width) * -extraWidth;
+      const top = (this.mouseY / this.containerSize.height) * -extraHeight;
       return {
         transform: `translate(${left}px, ${top}px)`,
       };

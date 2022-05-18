@@ -4,9 +4,8 @@ Mock.mock("/api/setting", "get", {
   code: 0,
   msg: "",
   data: {
-    avatar:
-      "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F10494546295%2F1000.jpg",
-    siteTitle: "高岭之皂的小窝",
+    avatar: "https://img0.baidu.com/it/u=3055514396,663073071&fm=253",
+    siteTitle: "高岭之皂の洞穴",
     github: "https://github.com/Jokarlist",
     qq: "1441474779",
     qqQrCode:
@@ -18,6 +17,6 @@ Mock.mock("/api/setting", "get", {
     icp: "粤网文[2020]3396-195号",
     githubName: "Jokarlist",
     favicon:
-      "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F10494546295%2F1000.jpg",
+      "https://img0.baidu.com/it/u=3055514396,663073071&fm=253",
   },
 });

@@ -1,6 +1,6 @@
 <template>
   <ul class="hierarchy-list-container">
-    <li v-for="(item, i) in lists" :key="i">
+    <li v-for="item in lists" :key="item.id">
       <span :class="{ active: item.isSelected }" @click="handleClick(item)">{{
         item.name
       }}</span>

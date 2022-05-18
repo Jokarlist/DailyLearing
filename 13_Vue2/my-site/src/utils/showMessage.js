@@ -1,4 +1,4 @@
-import getComponentRootDom from "./getComponentRootDom";
+import getComponentRootDOM from "./getComponentRootDOM";
 import Icon from "@/components/Icon";
 import styles from "./showMessage.module.less";
 
@@ -16,9 +16,9 @@ export default function (options = {}) {
     callback,
   } = options;
   const div = document.createElement("div");
-  const iconDom = getComponentRootDom(Icon, { type });
+  const iconDOM = getComponentRootDOM(Icon, { type });
 
-  div.innerHTML = `<span class="${styles.icon}">${iconDom.outerHTML}</span><div>${content}</div>`;
+  div.innerHTML = `<span class="${styles.icon}">${iconDOM.outerHTML}</span><div>${content}</div>`;
   div.className = `${styles.message} ${styles["message-" + type]}`;
 
   // 判断是否传参父容器，没有则让其相对body但最终会上溯到相对文档即视口定位

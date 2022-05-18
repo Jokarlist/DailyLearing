@@ -20,6 +20,7 @@ function setImage(img) {
     };
 
     tempImg.src = img.src;
+    // imgs数组中去除掉已进行懒加载处理的img
     imgs = imgs.filter((i) => i !== img);
   }
 }
@@ -47,6 +48,6 @@ export default {
     setImages();
   },
   unbind(el) {
-    imgs = imgs.filter((img) => img !== el);
+    imgs = imgs.filter((img) => img.dom !== el);
   },
 };
