@@ -5,7 +5,6 @@
       :data-source="tableData"
       :pagination="pagination"
       @change="handleChangePage"
-      :scroll="{ x: false, y: 500 }"
     >
       <div slot="operation" slot-scope="text, record" class="operation">
         <a-button @click="handleProductEdit(record)">编辑</a-button>
@@ -28,7 +27,7 @@ const columns = [
     title: "ID",
     align: "center",
     dataIndex: "id",
-    width: "100px",
+    // width: "100px",
   },
   {
     title: "标题",
@@ -46,19 +45,19 @@ const columns = [
     title: "类目",
     align: "center",
     dataIndex: "category",
-    width: "100px",
+    // width: "100px",
   },
   {
     title: "预售价格",
     align: "center",
     dataIndex: "price",
-    width: "100px",
+    // width: "100px",
   },
   {
     title: "折扣价格",
     align: "center",
     dataIndex: "price_off",
-    width: "100px",
+    // width: "100px",
   },
   {
     title: "标签",
@@ -69,7 +68,7 @@ const columns = [
     title: "限制购买数量",
     align: "center",
     dataIndex: "inventory",
-    width: "120px",
+    // width: "120px",
   },
   {
     title: "上架状态",
@@ -83,7 +82,7 @@ const columns = [
     title: "操作",
     align: "center",
     dataIndex: "operation",
-    width: "180px",
+    // width: "180px",
     scopedSlots: { customRender: "operation" },
   },
 ];
