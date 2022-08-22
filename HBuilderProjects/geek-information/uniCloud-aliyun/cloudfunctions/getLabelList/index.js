@@ -7,7 +7,7 @@ exports.main = async (event, context) => {
 	
 	//返回数据给客户端
 	return {
-		msg: 0,
-		labelList: data
+		code: 0,
+		data
 	}
 };
