@@ -1,18 +1,29 @@
 <template>
-	<view class="container">
-		<text>left</text>
-		<text>center</text>
-		<text>right</text>
+	<view class="home-container">
+		<NavBar />
+		<TabBar :labelList="labelList" />
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			labelList: [],
+		};
 	},
-	onLoad() {},
-	methods: {}
+	onLoad() {
+		this._initLabelList();
+	},
+	methods: {
+		_initLabelList() {
+			uniCloud
+				.callFunction({
+					name: "getLabelList",
+				})
+				.then(({ result: { labelList } }) => (this.labelList = labelList));
+		},
+	},
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-	<view><text>我的</text></view>
+	<view class="label-setting-container">标签设置页</view>
 </template>
 
 <script>

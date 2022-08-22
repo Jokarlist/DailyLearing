@@ -1,5 +1,5 @@
 <template>
-	<view><text>我的</text></view>
+	<view>搜索页面</view>
 </template>
 
 <script>

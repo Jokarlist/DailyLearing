@@ -76,7 +76,12 @@ $uni-color-paragraph: #3f536e; // 文章段落颜色
 $uni-font-size-paragraph: 15px;
 
 /* 定义混入：flex 布局相关 */
-@mixin flex($direction: row, $justify-style: space-between, $align-style: center, $wrap-style: nowrap) {
+@mixin flex(
+	$direction: row,
+	$justify-style: space-between,
+	$align-style: center,
+	$wrap-style: nowrap
+) {
 	display: flex;
 	flex-direction: $direction;
 	align-items: $align-style;
