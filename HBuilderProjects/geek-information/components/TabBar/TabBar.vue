@@ -1,6 +1,11 @@
 <template>
 	<view class="tabbar-container">
-		<scroll-view class="tabbar-scroll" scroll-x>
+		<scroll-view
+			class="tabbar-scroll"
+			scroll-x
+			scroll-with-animation
+			:scroll-into-view="`item${activeIdx}`"
+		>
 			<view class="tabbar-scroll-box">
 				<view
 					class="tabbar-scroll-item"
@@ -8,6 +13,7 @@
 					:key="i"
 					:class="{ active: activeIdx === i }"
 					@click="onScrollItemClick(i)"
+					:id="`item${i}`"
 				>
 					{{ item.name }}
 				</view>
@@ -27,11 +33,10 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-	},
-	data() {
-		return {
-			activeIdx: 0,
-		};
+		activeIdx: {
+			type: Number,
+			default: 0,
+		},
 	},
 	methods: {
 		onTabbarSettingClick() {
@@ -40,7 +45,7 @@ export default {
 			});
 		},
 		onScrollItemClick(idx) {
-			this.activeIdx = idx;
+			this.$emit("active-idx-change", idx);
 		},
 	},
 };

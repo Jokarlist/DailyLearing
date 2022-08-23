@@ -1,7 +1,16 @@
 <template>
 	<view class="home-container">
 		<NavBar />
-		<TabBar :labelList="labelList" />
+		<TabBar
+			:label-list="labelList"
+			:active-idx="activeIdx"
+			@active-idx-change="onActiveIdxChange"
+		/>
+		<ArticleList
+			:label-list-length="labelList.length"
+			:active-idx="activeIdx"
+			@active-idx-change="onActiveIdxChange"
+		/>
 	</view>
 </template>
 
@@ -10,6 +19,7 @@ export default {
 	data() {
 		return {
 			labelList: [],
+			activeIdx: 0,
 		};
 	},
 	onLoad() {
@@ -20,12 +30,27 @@ export default {
 			const res = await this.$http.getLabelList();
 			this.labelList = res;
 		},
+		onActiveIdxChange(idx) {
+			this.activeIdx = idx;
+		},
 	},
 };
 </script>
 
 <style scoped lang="scss">
-.container {
-	@include flex(row, space-around);
+page {
+	height: 100%;
+
+	.home-container {
+		@include flex(column, flex-start);
+		height: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
+
+		.article-list-container {
+			flex: 1;
+			width: 100%;
+		}
+	}
 }
 </style>
