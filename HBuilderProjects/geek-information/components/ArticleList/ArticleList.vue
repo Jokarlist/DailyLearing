@@ -1,10 +1,8 @@
 <template>
 	<view class="article-list-container">
 		<swiper class="swiper-container" :current="activeIdx" @change="onSwiperChange">
-			<swiper-item v-for="(n, i) in labelListLength" :key="i">
-				<view class="swiper-item">
-					<ListItem />
-				</view>
+			<swiper-item v-for="(item, i) in labelList" :key="item.name">
+				<view class="swiper-item"> <ListItem :article-list="articleListCache[i]" /> </view>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -14,18 +12,36 @@
 export default {
 	name: "ArticleList",
 	props: {
-		labelListLength: {
-			type: Number,
-			default: 0,
+		labelList: {
+			type: Array,
+			default: () => [],
 		},
 		activeIdx: {
 			type: Number,
 			default: 0,
 		},
 	},
+	data() {
+		return {
+			articleListCache: {},
+		};
+	},
 	methods: {
 		onSwiperChange({ detail: { current } }) {
 			this.$emit("active-idx-change", current);
+			if (!this.articleListCache[current] || !this.articleListCache[current].length) {
+				this._getArticleList(current);
+			}
+		},
+		async _getArticleList(curIdx) {
+			const res = await this.$http.getArticleList({ classify: this.labelList[curIdx].name });
+			// this.articleListCache[curIdx] = res;
+			this.$set(this.articleListCache, curIdx, res);
+		},
+	},
+	watch: {
+		labelList(newVal, oldVal) {
+			this._getArticleList(this.activeIdx);
 		},
 	},
 };
@@ -35,7 +51,7 @@ export default {
 .swiper-container {
 	height: 100%;
 	// touch-action: none;
-	
+
 	.swiper-item {
 		height: 100%;
 		overflow: hidden;

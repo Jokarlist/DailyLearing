@@ -7,7 +7,7 @@
 			@active-idx-change="onActiveIdxChange"
 		/>
 		<ArticleList
-			:label-list-length="labelList.length"
+			:label-list="labelList"
 			:active-idx="activeIdx"
 			@active-idx-change="onActiveIdxChange"
 		/>
@@ -28,7 +28,7 @@ export default {
 	methods: {
 		async _initLabelList() {
 			const res = await this.$http.getLabelList();
-			this.labelList = res;
+			this.labelList = [{ name: "全部" }, ...res];
 		},
 		onActiveIdxChange(idx) {
 			this.activeIdx = idx;

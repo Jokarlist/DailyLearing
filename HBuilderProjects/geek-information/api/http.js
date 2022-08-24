@@ -4,7 +4,8 @@ export default ({ name, data = {} }) => {
 		await uniCloud.callFunction({
 			name,
 			data
-		}).then(({ result: { code, data } }) => {
+		}).then(({ result: { code, msg, data } }) => {
+			uni.hideLoading();
 			if (code === 0) {
 				resolve(data);
 			} else {
@@ -13,7 +14,9 @@ export default ({ name, data = {} }) => {
 					title: msg
 				});
 			}
-		}).catch(err => reject(err));
-		uni.hideLoading();
+		}).catch(err => {
+			uni.hideLoading();
+			reject(err)
+		});
 	});
 }

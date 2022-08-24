@@ -2,56 +2,47 @@
 	<view class="list-card-container">
 		<!-- 基础模式 -->
 		<view class="list-card base-mode" v-if="item.mode === 'base'">
-			<view class="list-card-img">
-				<image
-					src="https://pc.hyfarsight.com/Fsf4RfIJyetNpvsXUmlGbQkhYoWA"
-					mode="aspectFill"
-				></image>
-			</view>
+			<view class="list-card-img"> <image :src="item.cover[0] || '/static/img/logo.jpeg'" mode="aspectFill"></image> </view>
 			<view class="list-card-content">
 				<view class="title">
-					<text>《故宫博物院》集训营直播课开讲啦（4月17号）</text>
+					<text>{{ item.title }}</text>
 					<Favor />
 				</view>
 				<view class="desc">
-					<view class="article-type">精彩直播</view> <view class="visit-times">293浏览</view>
+					<view class="article-type">{{ item.classify }}</view>
+					<view class="visit-times">{{ item.browse_count }}浏览</view>
 				</view>
 			</view>
 		</view>
 		<!-- 多图模式 -->
 		<view class="list-card column-mode" v-else-if="item.mode === 'column'">
 			<view class="list-card-top">
-				<text>SSR基本介绍以及API的使用</text>
+				<text>{{ item.title }}</text>
 				<Favor />
 			</view>
 			<view class="list-card-middle">
-				<view class="list-card-img" v-for="(item, i) in 3" :key="i">
-					<image
-						src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/1919394-dca940ffa0bd52c7.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp"
-						mode="aspectFill"
-					></image>
+				<view class="list-card-img" v-for="(item, i) in item.cover.slice(0, 3)" :key="i">
+					<image :src="`https://images.weserv.nl/?url=${item}`" mode="aspectFill"></image>
+					<!-- <image :src="item" mode="aspectFill"></image> -->
 				</view>
 			</view>
 			<view class="desc list-card-bottom">
-				<view class="article-type">精彩直播</view> <view class="visit-times">293浏览</view>
+				<view class="article-type">{{ item.classify }}</view>
+				<view class="visit-times">{{ item.browse_count }}浏览</view>
 			</view>
 		</view>
 		<!-- 大图模式 -->
 		<view class="list-card image-mode" v-else>
 			<view class="list-card-top">
-				<view class="list-card-img">
-					<image
-						src="https://img1.sycdn.imooc.com/5ccfac620001f8d405000344.jpg"
-						mode="aspectFill"
-					></image>
-				</view>
+				<view class="list-card-img"> <image :src="item.cover[0]" mode="aspectFill"></image> </view>
 			</view>
 			<view class="list-card-middle">
-				<text>SSR基本介绍以及API的使用</text>
+				<text>{{ item.title }}</text>
 				<Favor />
 			</view>
 			<view class="desc list-card-bottom">
-				<view class="article-type">精彩直播</view> <view class="visit-times">293浏览</view>
+				<view class="article-type">{{ item.classify }}</view>
+				<view class="visit-times">{{ item.browse_count }}浏览</view>
 			</view>
 		</view>
 	</view>
@@ -65,9 +56,6 @@ export default {
 			type: Object,
 			default: () => ({ mode: "base" }),
 		},
-	},
-	data() {
-		return {};
 	},
 };
 </script>
