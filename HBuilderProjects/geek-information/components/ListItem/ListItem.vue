@@ -1,7 +1,8 @@
 <template>
 	<view class="list-item-container">
-		<scroll-view scroll-y class="scroll-list">
-			<ListCard v-for="item in articleList" :key="item._id" :item="item" />
+		<scroll-view scroll-y class="scroll-list" @scrolltolower="onScrollToLower">
+			<view> <ListCard v-for="item in articleList" :key="item._id" :item="item" /> </view>
+			<uni-load-more :status="loadData.loadStatus" />
 		</scroll-view>
 	</view>
 </template>
@@ -13,6 +14,15 @@ export default {
 		articleList: {
 			type: Array,
 			default: () => [],
+		},
+		loadData: {
+			type: Object,
+			default: () => ({ loadStatus: "loading" }),
+		},
+	},
+	methods: {
+		onScrollToLower() {
+			this.$emit("load-more");
 		},
 	},
 };
