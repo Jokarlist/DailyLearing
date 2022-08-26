@@ -35,7 +35,7 @@
 			}
 		},
 		{
-			"path": "pages/userInfo/login/login",
+			"path": "pages/user/login/login",
 			"style": {
 				"navigationBarTitleText": "用户登录",
 				"navigationBarBackgroundColor": "#f25037",

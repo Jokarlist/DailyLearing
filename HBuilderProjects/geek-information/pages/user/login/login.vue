@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
+
 export default {
 	data() {
 		return {
@@ -74,14 +76,35 @@ export default {
 		};
 	},
 	methods: {
+		...mapMutations("user", ["setUserInfo"]),
 		changeFormType(type) {
 			this.type = type;
-			const clearRules =
-				type === "account" ? ["username", "password"] : ["phoneNum", "verification"];
-			this.$refs.loginForm.clearValidate(clearRules); // 清空校验规则
+			this.$refs.loginForm.clearValidate(); // 清空校验规则
 		},
 		async _loginSubmit() {
-			const res = await this.$refs.loginForm.validate();
+			const field =
+				this.type === "account" ? ["username", "password"] : ["phoneNum", "verification"];
+			try {
+				const res = await this.$refs.loginForm.validateField(field);
+				this._sendUserInfo({
+					...res,
+					type: this.type,
+				});
+			} catch (err) {
+				console.log(err);
+			}
+		},
+		async _sendUserInfo(data) {
+			const res = await this.$http.userLogin(data);
+			if (res) {
+				this.setUserInfo(res);
+				uni
+					.showToast({
+						title: "登陆成功",
+						icon: "success",
+					})
+					.then(() => setTimeout(() => uni.navigateBack(), 1500));
+			}
 		},
 	},
 };

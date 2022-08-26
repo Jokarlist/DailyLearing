@@ -6,36 +6,26 @@ export default {
 				return {
 					loginRules: {
 						username: {
-							rules: [{
-									required: true,
-									errorMessage: "用户名不能为空"
-								},
-								{
-									validateFunction: this.validateUsername
-								}
+							rules: [
+								{ required: true, errorMessage: "用户名不能为空" },
+								{ validateFunction: this.validateUsername }
 							]
 						},
 						password: {
-							rules: [{
-								required: true,
-								errorMessage: "密码不能为空"
-							}]
+							rules: [
+								{ required: true, errorMessage: "密码不能为空" },
+							]
 						},
 						phoneNum: {
-							rules: [{
-									require: true,
-									errorMessage: "电话号码不能为空"
-								},
-								{
-									validateFunction: this.validatePhoneNum
-								}
+							rules: [
+								{ require: true, errorMessage: "电话号码不能为空" },
+								{ validateFunction: this.validatePhoneNum }
 							]
 						},
 						verification: {
-							rules: [{
-								required: true,
-								errorMessage: "验证码不能为空"
-							}]
+							rules: [
+								{ required: true, errorMessage: "验证码不能为空" },
+							]
 						},
 					},
 					phoneNumReg: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
@@ -43,8 +33,8 @@ export default {
 			},
 			methods: {
 				validateUsername(rule, val, data, callback) {
-					if (val.length < 6) {
-						callback("用户名长度必须大于6");
+					if (val.length < 3) {
+						callback("用户名长度必须大于3");
 					} else {
 						return true;
 					}
