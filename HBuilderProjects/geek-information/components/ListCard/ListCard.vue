@@ -2,7 +2,9 @@
 	<view class="list-card-container">
 		<!-- 基础模式 -->
 		<view class="list-card base-mode" v-if="item.mode === 'base'">
-			<view class="list-card-img"> <image :src="item.cover[0] || '/static/img/logo.jpeg'" mode="aspectFill"></image> </view>
+			<view class="list-card-img">
+				<image :src="item.cover[0] || '/static/img/logo.jpeg'" mode="aspectFill"></image>
+			</view>
 			<view class="list-card-content">
 				<view class="title">
 					<text>{{ item.title }}</text>
@@ -57,6 +59,11 @@ export default {
 			default: () => ({ mode: "base" }),
 		},
 	},
+	methods: {
+		onTitleClick() {
+			console.log("onTitleClick");
+		},
+	},
 };
 </script>
 
@@ -88,6 +95,7 @@ export default {
 
 		.title {
 			@include flex();
+			width: 100%;
 			align-items: flex-start;
 			font-size: 28rpx;
 			color: #333333;

@@ -23,14 +23,22 @@
 		{
 			"path": "pages/search/search",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "搜索",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/labelSetting/labelSetting",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "标签设置",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/userInfo/login/login",
+			"style": {
+				"navigationBarTitleText": "用户登录",
+				"navigationBarBackgroundColor": "#f25037",
 				"enablePullDownRefresh": false
 			}
 		}

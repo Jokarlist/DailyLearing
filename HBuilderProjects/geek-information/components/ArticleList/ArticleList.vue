@@ -37,10 +37,10 @@ export default {
 		onSwiperChange({ detail: { current } }) {
 			this.$emit("active-idx-change", current);
 			if (!this.articleListCache[current] || !this.articleListCache[current].length) {
-				this.getArticleList(current);
+				this._getArticleList(current);
 			}
 		},
-		async getArticleList(curIdx) {
+		async _getArticleList(curIdx) {
 			// 首先判断当前索引对应的数据加载控制量是否已存在，不存在则新建
 			if (!this.loadDataControl[curIdx]) {
 				this.$set(this.loadDataControl, curIdx, {
@@ -70,12 +70,12 @@ export default {
 			}
 
 			this.loadDataControl[this.activeIdx].pageNum++;
-			this.getArticleList(this.activeIdx);
+			this._getArticleList(this.activeIdx);
 		},
 	},
 	watch: {
 		labelList(newVal, oldVal) {
-			this.getArticleList(this.activeIdx);
+			this._getArticleList(this.activeIdx);
 		},
 	},
 };
