@@ -3,15 +3,18 @@
 		<image src="/static/img/login_bg.png" class="banner-bg" />
 		<!-- 导航 -->
 		<view class="login-nav">
-			<view class="nav-item" :class="{ active: type === 'account' }" @click="type = 'account'"
+			<view
+				class="nav-item"
+				:class="{ active: type === 'account' }"
+				@click="changeFormType('account')"
 				>账号登录</view
 			>
-			<view class="nav-item" :class="{ active: type === 'phone' }" @click="type = 'phone'"
+			<view class="nav-item" :class="{ active: type === 'phone' }" @click="changeFormType('phone')"
 				>手机登录</view
 			>
 		</view>
 		<!-- 表单 -->
-		<uni-forms class="login-form" ref="loginForm" :model="formData">
+		<uni-forms class="login-form" ref="loginForm" :model="formData" :rules="loginRules">
 			<view v-show="type === 'account'">
 				<uni-forms-item label="账号" name="username">
 					<input
@@ -49,7 +52,7 @@
 					<VerificationCode class="verification-code" />
 				</uni-forms-item>
 			</view>
-			<button class="login-btn">立即登录</button>
+			<button class="login-btn" @click="_loginSubmit">立即登录</button>
 		</uni-forms>
 		<view class="login-footer">
 			<text class="register">注册</text> <text class="forget-password">忘记密码</text>
@@ -69,6 +72,17 @@ export default {
 				verfication: "",
 			},
 		};
+	},
+	methods: {
+		changeFormType(type) {
+			this.type = type;
+			const clearRules =
+				type === "account" ? ["username", "password"] : ["phoneNum", "verification"];
+			this.$refs.loginForm.clearValidate(clearRules); // 清空校验规则
+		},
+		async _loginSubmit() {
+			const res = await this.$refs.loginForm.validate();
+		},
 	},
 };
 </script>
