@@ -14,7 +14,7 @@
 			>
 		</view>
 		<!-- 表单 -->
-		<uni-forms class="login-form" ref="loginForm" :model="formData" :rules="loginRules">
+		<uni-forms class="login-form" ref="loginForm" :model="formData">
 			<view v-show="type === 'account'">
 				<uni-forms-item label="账号" name="username">
 					<input
@@ -49,7 +49,11 @@
 						placeholder-class="placeholder"
 						v-model="formData.verification"
 					/>
-					<VerificationCode class="verification-code" />
+					<VerificationCode
+						class="verification-code"
+						@get-form="getForm"
+						@get-verification-code="verificationCode = $event"
+					/>
 				</uni-forms-item>
 			</view>
 			<button class="login-btn" @click="_loginSubmit">立即登录</button>
@@ -61,9 +65,13 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
+	onReady() {
+		// 直接在 uni-forms 组件上通过 rules 属性传值设置表单校验规则，小程序不兼容，因此采用脚本手动设置
+		this.$refs.loginForm.setRules(this.loginRules);
+	},
 	data() {
 		return {
 			type: "account",
@@ -73,6 +81,7 @@ export default {
 				phoneNum: "",
 				verfication: "",
 			},
+			verificationCode: "",
 		};
 	},
 	methods: {
@@ -105,6 +114,9 @@ export default {
 					})
 					.then(() => setTimeout(() => uni.navigateBack(), 1500));
 			}
+		},
+		getForm(callback) {
+			callback && callback(this.$refs.loginForm);
 		},
 	},
 };

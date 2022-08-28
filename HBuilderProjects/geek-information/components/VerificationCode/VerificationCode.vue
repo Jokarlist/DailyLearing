@@ -1,12 +1,62 @@
 <template>
-	<view class="verification-code-container"> <view class="send-btn"> 获取验证码 </view> </view>
+	<view class="verification-code-container">
+		<view class="send-btn" @click="getForm">
+			{{ existTimer ? `${interval}秒后重新获取` : "获取验证码" }}
+		</view>
+	</view>
 </template>
 
 <script>
 export default {
 	name: "VerificationCode",
 	data() {
-		return {};
+		return {
+			interval: 60,
+			existTimer: false,
+			timerId: null,
+		};
+	},
+	methods: {
+		getForm() {
+			if (this.existTimer) return;
+			// 抛出 get-form 事件来获取 form 对象，因为直接采用 prop 传值的方式小程序不兼容（首次渲染后无法获取到 form 对象）
+			this.$emit("get-form", this._getVerificationCode);
+		},
+		async _getVerificationCode(form) {
+			try {
+				const res = await form.validateField(["phoneNum"]);
+				this.existTimer = true;
+				this.setTimer();
+				const { verificationCode, msg } = await this.$http.getVerificationCode(res);
+				uni.showToast({
+					title: msg,
+					icon: "none",
+				});
+
+				console.log("验证码为:", verificationCode);
+				this.$emit("get-verification-code", verificationCode);
+			} catch (e) {
+				console.log(e);
+			}
+		},
+		setTimer() {
+			this.timerId = setInterval(() => {
+				if (--this.interval === 1) {
+					clearInterval(this.timerId);
+					this.timerId = null;
+					this.existTimer = false;
+					this.interval = 60;
+				}
+			}, 1000);
+		},
+	},
+	beforeDestroy() {
+		if (this.timerId) {
+			clearInterval(this.timerId);
+			this.timerId = null;
+			this.existTimer = false;
+			this.interval = 60;
+		}
 	},
 };
 </script>

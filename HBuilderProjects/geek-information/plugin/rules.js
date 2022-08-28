@@ -25,6 +25,7 @@ export default {
 						verification: {
 							rules: [
 								{ required: true, errorMessage: "验证码不能为空" },
+								{ validateFunction: this.validateVerification }
 							]
 						},
 					},
@@ -42,6 +43,13 @@ export default {
 				validatePhoneNum(rule, val, data, callback) {
 					if (!this.phoneNumReg.test(val)) {
 						callback("电话号码格式不正确");
+					} else {
+						return true;
+					}
+				},
+				validateVerification(rule, val, data, callback) {
+					if (val !== this.verificationCode) {
+						callback("验证码不正确")
 					} else {
 						return true;
 					}
