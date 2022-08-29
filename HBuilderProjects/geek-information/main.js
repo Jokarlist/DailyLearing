@@ -2,14 +2,18 @@ import App from './App'
 import store from "@/store/index.js";
 
 import module from "@/api/request/index.js";
-import loginRules from "@/plugin/rules.js";
+import loginRules from "@/plugin/validateRules.js";
+import userInfo from "@/plugin/userInfo.js";
 
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
 App.mpType = 'app'
+
 Vue.prototype.$http = module;
 Vue.use(loginRules);
+Vue.use(userInfo);
+
 const app = new Vue({
 	...App,
 	store

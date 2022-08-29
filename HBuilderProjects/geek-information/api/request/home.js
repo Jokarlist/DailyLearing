@@ -11,3 +11,9 @@ export const getArticleList = data => request({
 	name: "getArticleList",
 	data
 });
+
+// 修改文章收藏状态
+export const updateArticleFavorStatus = data => request({
+	name: "updateArticleFavorStatus",
+	data
+});

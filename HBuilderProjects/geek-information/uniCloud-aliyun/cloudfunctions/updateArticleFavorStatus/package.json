@@ -1,0 +1,7 @@
+{
+  "name": "updateArticleFavorStatus",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

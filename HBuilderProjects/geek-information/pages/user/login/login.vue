@@ -65,8 +65,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-
 export default {
 	onReady() {
 		// 直接在 uni-forms 组件上通过 rules 属性传值设置表单校验规则，小程序不兼容，因此采用脚本手动设置
@@ -85,7 +83,6 @@ export default {
 		};
 	},
 	methods: {
-		...mapMutations("user", ["setUserInfo"]),
 		changeFormType(type) {
 			this.type = type;
 			this.$refs.loginForm.clearValidate(); // 清空校验规则

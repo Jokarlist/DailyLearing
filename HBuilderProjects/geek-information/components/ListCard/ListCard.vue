@@ -8,7 +8,7 @@
 			<view class="list-card-content">
 				<view class="title">
 					<text>{{ item.title }}</text>
-					<Favor />
+					<Favor :article-id="item._id"/>
 				</view>
 				<view class="desc">
 					<view class="article-type">{{ item.classify }}</view>
@@ -20,7 +20,7 @@
 		<view class="list-card column-mode" v-else-if="item.mode === 'column'">
 			<view class="list-card-top">
 				<text>{{ item.title }}</text>
-				<Favor />
+				<Favor :article-id="item._id"/>
 			</view>
 			<view class="list-card-middle">
 				<view class="list-card-img" v-for="(item, i) in item.cover.slice(0, 3)" :key="i">
@@ -40,7 +40,7 @@
 			</view>
 			<view class="list-card-middle">
 				<text>{{ item.title }}</text>
-				<Favor />
+				<Favor :article-id="item._id"/>
 			</view>
 			<view class="desc list-card-bottom">
 				<view class="article-type">{{ item.classify }}</view>
