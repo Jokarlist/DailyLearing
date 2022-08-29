@@ -25,11 +25,13 @@
 					/>
 				</uni-forms-item>
 				<uni-forms-item label="密码" name="password">
-					<input
+					<uni-easyinput
 						type="password"
 						placeholder="请输入密码"
-						placeholder-class="placeholder"
+						placeholder-style="color: #ccc; font-size: 28rpx"
 						v-model="formData.password"
+						:inputBorder="false"
+						class="password-input"
 					/>
 				</uni-forms-item>
 			</view>
@@ -205,5 +207,13 @@ page {
 	font-size: 32rpx;
 	border-radius: 10rpx;
 	background-color: $base-color;
+}
+
+/deep/ .uni-easyinput__content-input {
+	padding: 0 !important;
+}
+
+/deep/ .uni-icons.content-clear-icon {
+	flex-basis: 220rpx;
 }
 </style>
