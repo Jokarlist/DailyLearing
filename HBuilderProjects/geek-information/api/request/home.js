@@ -17,3 +17,9 @@ export const updateArticleFavorStatus = data => request({
 	name: "updateArticleFavorStatus",
 	data
 });
+
+// 按照关键字搜索文章
+export const searchArticle = data => request({
+	name: "searchArticle",
+	data
+});

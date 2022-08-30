@@ -20,9 +20,17 @@
 			>
 				<uni-icons class="navbar-serach-icon" type="search" color="#999" />
 				<!-- 文章页的搜索框处理 -->
-				<view class="navbar-search-text" v-if="!isSearch">输入文章标题进行搜索</view>
+				<view v-if="!isSearch" class="navbar-search-text">输入文章标题进行搜索</view>
 				<!-- 搜索页的搜索框处理 -->
-				<input type="text" placeholder="输入文章标题进行搜索" class="navbar-search-input" v-else />
+				<input
+					v-else
+					type="text"
+					placeholder="输入文章标题进行搜索"
+					class="navbar-search-input"
+					confirm-type="search"
+					@confirm="searchConfirm"
+					@input="searchInput"
+				/>
 			</view>
 		</view>
 		<!-- 底部垫片 -->
@@ -33,6 +41,10 @@
 <script>
 export default {
 	name: "NavBar",
+	model: {
+		prop: "searchVal",
+		event: "search-confirm",
+	},
 	props: {
 		isSearch: {
 			type: Boolean,
@@ -62,6 +74,14 @@ export default {
 			// #ifndef H5
 			uni.navigateBack();
 			// #endif
+		},
+		searchConfirm({ detail: { value: searchVal } }) {
+			searchVal = searchVal.replace(/\s/g, "");
+			this.$emit("search-confirm", searchVal);
+		},
+		searchInput({ detail: { value: searchVal } }) {
+			searchVal = searchVal.replace(/\s/g, "");
+			!searchVal && this.$emit("search-input-null-str");
 		},
 	},
 	created() {

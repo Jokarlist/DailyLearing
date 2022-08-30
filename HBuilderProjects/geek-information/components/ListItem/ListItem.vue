@@ -2,7 +2,7 @@
 	<view class="list-item-container">
 		<scroll-view scroll-y class="scroll-list" @scrolltolower="onScrollToLower">
 			<view> <ListCard v-for="item in articleList" :key="item._id" :item="item" /> </view>
-			<uni-load-more :status="loadData.loadStatus" />
+			<uni-load-more :status="loadData.loadStatus" v-if="isShowLoadMore" />
 		</scroll-view>
 	</view>
 </template>
@@ -18,6 +18,10 @@ export default {
 		loadData: {
 			type: Object,
 			default: () => ({ loadStatus: "loading" }),
+		},
+		isShowLoadMore: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	methods: {

@@ -1,0 +1,7 @@
+{
+  "name": "searchArticle",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
