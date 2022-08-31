@@ -75,6 +75,8 @@ export default {
 	},
 	watch: {
 		labelList(newVal, oldVal) {
+			this.articleListCache = {};
+			this.loadDataControl = {};
 			this._getArticleList(this.activeIdx);
 		},
 	},

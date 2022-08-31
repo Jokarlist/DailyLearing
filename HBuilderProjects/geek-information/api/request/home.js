@@ -23,3 +23,9 @@ export const searchArticle = data => request({
 	name: "searchArticle",
 	data
 });
+
+// 更新用于渲染用户所选择展示的标签的 labelIds 数组
+export const updateLabelIds = data => request({
+	name: "updateLabelIds",
+	data
+});

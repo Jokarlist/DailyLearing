@@ -26,13 +26,27 @@ export default {
 	onLoad() {
 		this._initLabelList();
 	},
-	computed: mapState("label", ["labelList"]),
+	computed: {
+		labelList() {
+			const labelList = this.$store.state.label.labelList;
+			if (this.userInfo) {
+				this.activeIdx = 0;
+				return [
+					...labelList.slice(0, 1),
+					...labelList.filter(l => this.userInfo.label_ids.includes(l._id)),
+				];
+			} else {
+				return labelList;
+			}
+		},
+		// ...mapState("label", ["labelList"]),
+	},
 	methods: {
 		...mapMutations("label", ["setLabelList"]),
 		async _initLabelList() {
 			if (this.labelList.length) return;
-			const res = await this.$http.getLabelList();
-			this.setLabelList([{ name: "全部" }, ...res]);
+			const labelList = await this.$http.getLabelList();
+			this.setLabelList([{ name: "全部" }, ...labelList]);
 		},
 		onActiveIdxChange(idx) {
 			this.activeIdx = idx;

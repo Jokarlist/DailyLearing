@@ -5,6 +5,7 @@ export default {
 	install(Vue) {
 		Vue.mixin({
 			methods: {
+				...mapMutations("user", ["setUserInfo"]),
 				checkLoginStatus() {
 					return new Promise((resolve, reject) => {
 						if (this.userInfo) {
@@ -15,9 +16,7 @@ export default {
 							}).then(reject);
 						}
 					})
-					// return !!this.userInfo;
 				},
-				...mapMutations("user", ["setUserInfo"])
 			},
 			computed: {
 				...mapState("user", ["userInfo"])

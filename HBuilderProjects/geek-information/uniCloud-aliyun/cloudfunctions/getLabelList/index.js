@@ -3,7 +3,7 @@ const db = uniCloud.database();
 
 exports.main = async () => {
 	const label = db.collection("label");
-	const data = (await label.get()).data.map(({ name, user }) => ({ name, user }));
+	const { data } = await label.get();
 
 	return {
 		code: 0,

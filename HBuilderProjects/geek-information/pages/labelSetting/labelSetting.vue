@@ -6,37 +6,87 @@
 				<view class="label-edit" @click="editLabel">{{ this.isEdit ? "完成" : "编辑" }}</view>
 			</view>
 			<view class="label-content">
-				<view class="label-content-item" v-for="(item, idx) in 8" :key="idx">
-					前端开发
-					<uni-icons v-show="isEdit" class="icon-remove" type="clear" size="20" color="red" />
+				<view class="label-content-item" v-for="(item, idx) in selfLabelList" :key="item._id">
+					{{ item.name }}
+					<uni-icons
+						v-show="isEdit"
+						class="icon-remove"
+						type="clear"
+						size="20"
+						color="red"
+						@click="removeLabelItem(item)"
+					/>
 				</view>
-				<view class="no-data">当前没有数据</view>
+				<view v-show="!selfLabelList.lengh" class="no-data">当前没有数据</view>
 			</view>
 		</view>
 		<view class="label-wrapper">
 			<view class="label-header"> <view class="label-title">标签推荐</view> </view>
 			<view class="label-content">
-				<view class="label-content-item" v-for="(item, idx) in 7" :key="idx"> 后端开发 </view>
-				<view class="no-data">当前没有数据</view>
+				<view
+					class="label-content-item"
+					v-for="(item, idx) in recommendLabelList"
+					:key="item._id"
+					@click="changeSelfLabelList(item)"
+				>
+					{{ item.name }}
+				</view>
+				<view v-show="!recommendLabelList.length" class="no-data">当前没有数据</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
 	data() {
 		return {
 			isEdit: false,
+			labelIds: [],
 		};
 	},
 	methods: {
 		async editLabel() {
-			await this._updateLabel();
+			this.isEdit && (await this._updateLabel());
 			this.isEdit = !this.isEdit;
 		},
 		async _updateLabel() {
-			console.log("更新标签");
+			const {msg} = await this.$http.updateLabelIds({
+				userId: this.userInfo._id,
+				labelIds: this.labelIds,
+			});
+			
+			uni.showToast({
+				title: msg,
+				icon: "none"
+			});
+			
+			this.setUserInfo({...this.userInfo, label_ids: this.labelIds});
+		},
+		removeLabelItem(labelItem) {
+			this.labelIds = this.labelIds.filter(id => id !== labelItem._id);
+		},
+		changeSelfLabelList(labelItem) {
+			this.isEdit && this.labelIds.push(labelItem._id);
+		},
+	},
+	computed: {
+		...mapState("label", ["labelList"]),
+		selfLabelList() {
+			return this.labelList.slice(1).filter(l => this.labelIds.includes(l._id));
+		},
+		recommendLabelList() {
+			return this.labelList.slice(1).filter(l => !this.labelIds.includes(l._id));
+		},
+	},
+	watch: {
+		userInfo: {
+			immediate: true,
+			handler(newVal, oldVal) {
+				this.labelIds = [...this.userInfo.label_ids];
+			},
 		},
 	},
 };
