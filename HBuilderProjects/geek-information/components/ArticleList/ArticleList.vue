@@ -78,6 +78,9 @@ export default {
 			this._getArticleList(this.activeIdx);
 		},
 	},
+	created() {
+		this.labelList.length && this._getArticleList(this.activeIdx);
+	},
 };
 </script>
 

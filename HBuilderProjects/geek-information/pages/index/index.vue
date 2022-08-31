@@ -15,20 +15,24 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
 	data() {
 		return {
-			labelList: [],
 			activeIdx: 0,
 		};
 	},
 	onLoad() {
 		this._initLabelList();
 	},
+	computed: mapState("label", ["labelList"]),
 	methods: {
+		...mapMutations("label", ["setLabelList"]),
 		async _initLabelList() {
+			if (this.labelList.length) return;
 			const res = await this.$http.getLabelList();
-			this.labelList = [{ name: "全部" }, ...res];
+			this.setLabelList([{ name: "全部" }, ...res]);
 		},
 		onActiveIdxChange(idx) {
 			this.activeIdx = idx;

@@ -30,6 +30,7 @@
 			"path": "pages/labelSetting/labelSetting",
 			"style": {
 				"navigationBarTitleText": "标签设置",
+				"navigationBarBackgroundColor": "#f25037",
 				"enablePullDownRefresh": false
 			}
 		},

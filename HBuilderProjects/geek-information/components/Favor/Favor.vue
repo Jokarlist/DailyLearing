@@ -19,7 +19,8 @@ export default {
 	methods: {
 		async _changeFavorStaus() {
 			// TODOS 判断用户是否登录，若登录则改变当前的收藏状态，否则跳转至用户登录页
-			if (this.checkLoginStatus()) {
+			try {
+				await this.checkLoginStatus();
 				const { msg, updatedUserInfo } = await this.$http.updateArticleFavorStatus({
 					articleId: this.articleId,
 					userId: this.userInfo._id,
@@ -31,11 +32,14 @@ export default {
 				});
 
 				this.setUserInfo({ ...this.userInfo, ...updatedUserInfo });
-			} else {
+			} catch (e) {
 				uni.navigateTo({
 					url: "/pages/user/login/login",
 				});
 			}
+			/* if (this.checkLoginStatus()) {
+			} else {
+			} */
 		},
 	},
 	computed: {

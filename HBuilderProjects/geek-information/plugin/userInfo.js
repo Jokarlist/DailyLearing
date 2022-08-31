@@ -6,7 +6,16 @@ export default {
 		Vue.mixin({
 			methods: {
 				checkLoginStatus() {
-					return !!this.userInfo;
+					return new Promise((resolve, reject) => {
+						if (this.userInfo) {
+							resolve();
+						} else {
+							uni.navigateTo({
+								url: "/pages/user/login/login",
+							}).then(reject);
+						}
+					})
+					// return !!this.userInfo;
 				},
 				...mapMutations("user", ["setUserInfo"])
 			},

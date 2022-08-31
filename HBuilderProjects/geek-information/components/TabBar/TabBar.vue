@@ -9,18 +9,18 @@
 			<view class="tabbar-scroll-box">
 				<view
 					class="tabbar-scroll-item"
-					v-for="(item, i) in labelList"
-					:key="i"
-					:class="{ active: activeIdx === i }"
-					@click="onScrollItemClick(i)"
-					:id="`item${i}`"
+					v-for="(item, idx) in labelList"
+					:key="idx"
+					:class="{ active: activeIdx === idx }"
+					@click="labelItemClick(idx)"
+					:id="`item${idx}`"
 				>
 					{{ item.name }}
 				</view>
 			</view>
 		</scroll-view>
 		<view class="tabbar-setting">
-			<uni-icons type="gear" size="26" color="666" @click="onTabbarSettingClick" />
+			<uni-icons type="gear" size="26" color="666" @click="goToLabelSetting" />
 		</view>
 	</view>
 </template>
@@ -39,12 +39,17 @@ export default {
 		},
 	},
 	methods: {
-		onTabbarSettingClick() {
-			uni.navigateTo({
-				url: "/pages/labelSetting/labelSetting",
-			});
+		async goToLabelSetting() {
+			try {
+				await this.checkLoginStatus();
+				uni.navigateTo({
+					url: "/pages/labelSetting/labelSetting",
+				});
+			} catch (e) {
+				console.log("未登录，请先登录");
+			}
 		},
-		onScrollItemClick(idx) {
+		labelItemClick(idx) {
 			this.$emit("active-idx-change", idx);
 		},
 	},

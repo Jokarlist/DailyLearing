@@ -111,7 +111,19 @@ export default {
 						title: "登陆成功",
 						icon: "success",
 					})
-					.then(() => setTimeout(() => uni.navigateBack(), 1500));
+					.then(() =>
+						setTimeout(() => {
+							// #ifdef H5
+							uni.switchTab({
+								url: "/pages/index/index",
+							});
+							// #endif
+
+							// #ifndef H5
+							uni.navigateBack();
+							// #endif
+						}, 1500)
+					);
 			}
 		},
 		getForm(callback) {
