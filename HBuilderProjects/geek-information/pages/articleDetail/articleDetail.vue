@@ -1,22 +1,26 @@
 <template>
 	<view class="article-detail-container">
 		<!-- 标题 -->
-		<view class="detail-title"> ssr基本介绍以及API的使用 </view>
+		<view class="detail-title"> {{ articleDetail.title }} </view>
 		<!-- 头部 -->
 		<view class="detail-header">
 			<view class="detail-header-logo">
-				<image src="../../static/img/logo.jpeg" mode="aspectFill"></image>
+				<image :src="articleDetail.author.avatar" mode="aspectFill"></image>
 			</view>
 			<view class="detail-header-content">
-				<view class="detail-header-content-title">WEB讲师</view>
+				<view class="detail-header-content-title">{{ articleDetail.author.author_name }}</view>
 				<view class="detail-header-content-info">
-					<text>2020.03.16 17:50</text> <text>173 浏览</text> <text>6 赞</text>
+					<text>{{ articleDetail.createTime }}</text>
+					<text>{{ articleDetail.browseCount }} 浏览</text>
+					<text>{{ articleDetail.thumbsUpCount }} 赞</text>
 				</view>
 			</view>
 			<button class="detail-header-button" type="default">取消关注</button>
 		</view>
 		<!-- 内容 -->
-		<view class="detail-content"> <view class="detail-text">文本内容</view> </view>
+		<view class="detail-content">
+			<view class="detail-text"> <uParse :content="content" /> </view>
+		</view>
 		<!-- 评论 -->
 		<view class="detail-comment">
 			<view class="detail-comment-input">
@@ -39,9 +43,37 @@
 </template>
 
 <script>
+import uParse from "@/components/u-parse/u-parse.vue";
+import { marked } from "marked";
+
 export default {
+	components: {
+		uParse,
+	},
+	onLoad({ basicInfo }) {
+		this.articleDetail = JSON.parse(basicInfo);
+		this._getArticleDetail();
+	},
 	data() {
-		return {};
+		return {
+			articleDetail: null,
+		};
+	},
+	methods: {
+		async _getArticleDetail() {
+			this.articleDetail = await this.$http.getArticleDetail({
+				articleId: this.articleDetail.articleId,
+			});
+		},
+	},
+	computed: {
+		content() {
+			try {
+				return marked(this.articleDetail.content);
+			} catch (e) {
+				return null;
+			}
+		},
 	},
 };
 </script>
