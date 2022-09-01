@@ -1,14 +1,14 @@
 <template>
 	<view class="list-card-container">
 		<!-- 基础模式 -->
-		<view class="list-card base-mode" v-if="item.mode === 'base'">
+		<view class="list-card base-mode" v-if="item.mode === 'base'" @click="go2ArticleDetail">
 			<view class="list-card-img">
 				<image :src="item.cover[0] || '/static/img/logo.jpeg'" mode="aspectFill"></image>
 			</view>
 			<view class="list-card-content">
 				<view class="title">
 					<text>{{ item.title }}</text>
-					<Favor :article-id="item._id"/>
+					<Favor :article-id="item._id" />
 				</view>
 				<view class="desc">
 					<view class="article-type">{{ item.classify }}</view>
@@ -17,10 +17,14 @@
 			</view>
 		</view>
 		<!-- 多图模式 -->
-		<view class="list-card column-mode" v-else-if="item.mode === 'column'">
+		<view
+			class="list-card column-mode"
+			v-else-if="item.mode === 'column'"
+			@click="go2ArticleDetail"
+		>
 			<view class="list-card-top">
 				<text>{{ item.title }}</text>
-				<Favor :article-id="item._id"/>
+				<Favor :article-id="item._id" />
 			</view>
 			<view class="list-card-middle">
 				<view class="list-card-img" v-for="(item, i) in item.cover.slice(0, 3)" :key="i">
@@ -34,13 +38,13 @@
 			</view>
 		</view>
 		<!-- 大图模式 -->
-		<view class="list-card image-mode" v-else>
+		<view class="list-card image-mode" v-else @click="go2ArticleDetail">
 			<view class="list-card-top">
 				<view class="list-card-img"> <image :src="item.cover[0]" mode="aspectFill"></image> </view>
 			</view>
 			<view class="list-card-middle">
 				<text>{{ item.title }}</text>
-				<Favor :article-id="item._id"/>
+				<Favor :article-id="item._id" />
 			</view>
 			<view class="desc list-card-bottom">
 				<view class="article-type">{{ item.classify }}</view>
@@ -60,8 +64,10 @@ export default {
 		},
 	},
 	methods: {
-		onTitleClick() {
-			console.log("onTitleClick");
+		go2ArticleDetail() {
+			uni.navigateTo({
+				url: "/pages/articleDetail/articleDetail",
+			});
 		},
 	},
 };
