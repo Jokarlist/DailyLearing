@@ -23,7 +23,7 @@
 		</view>
 		<!-- 评论 -->
 		<view class="detail-comment">
-			<view class="detail-comment-input">
+			<view class="detail-comment-input" @click="startComment">
 				<text>谈谈你的看法</text>
 				<uni-icons type="compose" size="16" color="#f07373"></uni-icons>
 			</view>
@@ -39,6 +39,11 @@
 				</view>
 			</view>
 		</view>
+		<CommentMask
+			:showPopup="showPopup"
+			@close-comment-mask="showPopup = $event"
+			@publish-comment="_publishComment"
+		/>
 	</view>
 </template>
 
@@ -57,6 +62,7 @@ export default {
 	data() {
 		return {
 			articleDetail: null,
+			showPopup: false,
 		};
 	},
 	methods: {
@@ -64,6 +70,27 @@ export default {
 			this.articleDetail = await this.$http.getArticleDetail({
 				articleId: this.articleDetail.articleId,
 			});
+		},
+		async startComment() {
+			try {
+				await this.checkLoginStatus();
+				this.showPopup = true;
+			} catch (e) {
+				console.log("未登录，请先登录");
+			}
+		},
+		async _publishComment(commentValue) {
+			const { msg } = await this.$http.updateComment({
+				articleId: this.articleDetail._id,
+				userId: this.userInfo._id,
+				content: commentValue,
+			});
+
+			uni.showToast({
+				title: msg,
+			});
+			
+			this.showPopup = false;
 		},
 	},
 	computed: {
