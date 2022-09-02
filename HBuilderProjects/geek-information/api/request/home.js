@@ -41,3 +41,9 @@ export const updateComment = (data) => request({
 	name: "updateComment",
 	data,
 });
+
+// 获取单篇文章的评论
+export const getCommentList = data => request({
+	name: "getCommentList",
+	data,
+});

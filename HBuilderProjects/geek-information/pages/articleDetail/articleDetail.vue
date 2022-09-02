@@ -10,9 +10,9 @@
 			<view class="detail-header-content">
 				<view class="detail-header-content-title">{{ articleDetail.author.author_name }}</view>
 				<view class="detail-header-content-info">
-					<text>{{ articleDetail.createTime }}</text>
-					<text>{{ articleDetail.browseCount }} 浏览</text>
-					<text>{{ articleDetail.thumbsUpCount }} 赞</text>
+					<text>{{ articleDetail.create_time }}</text>
+					<text>{{ articleDetail.browse_count }} 浏览</text>
+					<text>{{ articleDetail.thumbs_up_count }} 赞</text>
 				</view>
 			</view>
 			<button class="detail-header-button" type="default">取消关注</button>
@@ -20,8 +20,16 @@
 		<!-- 内容 -->
 		<view class="detail-content">
 			<view class="detail-text"> <uParse :content="content" /> </view>
+			<!-- 评论展示 -->
+			<view class="detail-comment-area">
+				<view class="comment-title">最新评论</view>
+				<view class="comment-content-container" v-for="item in commentList" :key="item.comment_id">
+					<CommentItem :commentData="item" />
+				</view>
+				<view class="no-data" v-if="!commentList.length">暂无评论</view>
+			</view>
 		</view>
-		<!-- 评论 -->
+		<!-- 评论书写 -->
 		<view class="detail-comment">
 			<view class="detail-comment-input" @click="startComment">
 				<text>谈谈你的看法</text>
@@ -58,17 +66,19 @@ export default {
 	onLoad({ basicInfo }) {
 		this.articleDetail = JSON.parse(basicInfo);
 		this._getArticleDetail();
+		this._getCommentList();
 	},
 	data() {
 		return {
 			articleDetail: null,
 			showPopup: false,
+			commentList: [],
 		};
 	},
 	methods: {
 		async _getArticleDetail() {
 			this.articleDetail = await this.$http.getArticleDetail({
-				articleId: this.articleDetail.articleId,
+				articleId: this.articleDetail._id,
 			});
 		},
 		async startComment() {
@@ -89,8 +99,15 @@ export default {
 			uni.showToast({
 				title: msg,
 			});
-			
+
 			this.showPopup = false;
+		},
+		async _getCommentList() {
+			const commentList = await this.$http.getCommentList({
+				articleId: this.articleDetail._id,
+			});
+
+			this.commentList = commentList;
 		},
 	},
 	computed: {
@@ -172,6 +189,30 @@ export default {
 
 	.detail-text {
 		padding: 0 30rpx;
+	}
+
+	.detail-comment-area {
+		margin-top: 60rpx;
+
+		.comment-title {
+			padding: 20rpx 30rpx;
+			font-size: 28rpx;
+			color: #666;
+			border-bottom: 1px solid #ddd;
+		}
+
+		.comment-content-container {
+			padding: 0 30rpx;
+			border-bottom: 1px solid #eee;
+		}
+
+		.no-data {
+			width: 100%;
+			padding: 30rpx 0;
+			text-align: center;
+			color: #999;
+			font-size: 28rpx;
+		}
 	}
 }
 

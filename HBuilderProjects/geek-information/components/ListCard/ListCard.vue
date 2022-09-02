@@ -66,15 +66,15 @@ export default {
 	methods: {
 		go2ArticleDetail() {
 			const {
-				_id: articleId,
+				_id,
 				title,
 				author,
-				create_time: createTime,
-				thumbs_up_count: thumbsUpCount,
-				browse_count: browseCount,
+				create_time,
+				thumbs_up_count,
+				browse_count,
 			} = this.item;
 
-			const basicInfo = { articleId, title, author, createTime, thumbsUpCount, browseCount };
+			const basicInfo = { _id, title, author, create_time, thumbs_up_count, browse_count };
 			uni.navigateTo({
 				url: `/pages/articleDetail/articleDetail?basicInfo=${JSON.stringify(basicInfo)}`,
 			});

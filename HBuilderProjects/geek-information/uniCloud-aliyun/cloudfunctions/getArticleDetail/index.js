@@ -6,6 +6,7 @@ exports.main = async ({ articleId }, context) => {
 		.collection("article")
 		.aggregate()
 		.match({ _id: articleId })
+		.project({ comments: 0 })
 		.end();
 
 	return {
