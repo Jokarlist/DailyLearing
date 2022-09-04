@@ -6,7 +6,7 @@ exports.main = async (event, context) => {
 	const user = await db.collection("user");
 	const { data } = await user
 		.aggregate()
-		.match(type === "account" ? { username, password } : { phoneNum })
+		.match(type === "account" ? { username, password } : { phone_num: phoneNum })
 		.end();
 	//返回数据给客户端
 	return data.length ? {

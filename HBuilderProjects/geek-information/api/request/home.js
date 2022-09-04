@@ -19,8 +19,8 @@ export const updateArticleFavorStatus = (data) => request({
 });
 
 // 按照关键字搜索文章
-export const searchArticle = (data) => request({
-	name: "searchArticle",
+export const getArticleByKeyword = (data) => request({
+	name: "getArticleByKeyword",
 	data,
 });
 

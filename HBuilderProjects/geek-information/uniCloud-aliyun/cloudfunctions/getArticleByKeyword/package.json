@@ -1,5 +1,5 @@
 {
-  "name": "searchArticle",
+  "name": "getArticleByKeyword",
   "dependencies": {},
   "extensions": {
     "uni-cloud-jql": {}

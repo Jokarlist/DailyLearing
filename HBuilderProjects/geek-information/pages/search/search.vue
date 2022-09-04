@@ -65,7 +65,7 @@ export default {
 				return;
 			}
 
-			const { articleList } = await this.$http.searchArticle({ searchVal });
+			const { articleList } = await this.$http.getArticleByKeyword({ searchVal });
 			this.searchList = articleList;
 			this.setSearchHistory(searchVal);
 		},
