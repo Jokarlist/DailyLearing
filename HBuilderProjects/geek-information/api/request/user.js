@@ -11,3 +11,9 @@ export const getVerificationCode = data => request({
 	name: "getVerificationCode",
 	data
 });
+
+// 更新用户关注信息
+export const updateFollowAuthor = data => request({
+	name: "updateFollowAuthor",
+	data
+});

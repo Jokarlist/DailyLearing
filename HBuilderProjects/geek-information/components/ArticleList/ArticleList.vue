@@ -75,6 +75,8 @@ export default {
 	},
 	watch: {
 		labelList(newVal, oldVal) {
+			// 判断当前 labelList 的值与旧值内容是否相同，若相同则不重新进行异步数据获取
+			if (JSON.stringify(newVal) === JSON.stringify(oldVal)) return;
 			this.articleListCache = {};
 			this.loadDataControl = {};
 			this._getArticleList(this.activeIdx);

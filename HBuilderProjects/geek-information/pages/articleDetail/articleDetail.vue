@@ -15,11 +15,13 @@
 					<text>{{ articleDetail.thumbs_up_count }} 赞</text>
 				</view>
 			</view>
-			<button class="detail-header-button" type="default">取消关注</button>
+			<button class="detail-header-button" type="default" @click="_followAuthor">
+				{{ isFollowAuthor ? "取消关注" : "关注" }}
+			</button>
 		</view>
 		<!-- 内容 -->
 		<view class="detail-content">
-			<!-- <view class="detail-text"> <uParse :content="content" /> </view> -->
+			<view class="detail-text"> <uParse :content="content" /> </view>
 			<!-- 评论展示 -->
 			<view class="detail-comment-area">
 				<view class="comment-title">最新评论</view>
@@ -124,6 +126,32 @@ export default {
 			this.startComment();
 			// comment.reply_id && (this.replyData.reply_id = comment)
 		},
+		async _followAuthor() {
+			try {
+				await this.checkLoginStatus();
+				const { msg } = await this.$http.updateFollowAuthor({
+					authorId: this.articleDetail.author.id,
+					userId: this.userInfo._id,
+				});
+
+				uni.showToast({
+					title: msg,
+					icon: "none",
+				});
+
+				const targetAuthorId = this.articleDetail.author.id;
+				let authorLikesIds = [...this.userInfo.author_likes_ids];
+				if (authorLikesIds.includes(targetAuthorId)) {
+					authorLikesIds = authorLikesIds.filter(id => !id === targetAuthorId);
+				} else {
+					authorLikesIds.push(targetAuthorId);
+				}
+
+				this.setUserInfo({ ...this.userInfo, author_likes_ids: authorLikesIds });
+			} catch (e) {
+				console.log("未登录，请先登录");
+			}
+		},
 	},
 	computed: {
 		content() {
@@ -131,6 +159,15 @@ export default {
 				return marked(this.articleDetail.content);
 			} catch (e) {
 				return null;
+			}
+		},
+		isFollowAuthor() {
+			try {
+				return (
+					this.userInfo && this.userInfo.author_likes_ids.includes(this.articleDetail.author.id)
+				);
+			} catch (e) {
+				return false;
 			}
 		},
 	},
