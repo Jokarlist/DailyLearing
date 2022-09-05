@@ -21,7 +21,10 @@
 		<view class="comment-content">
 			<view>{{ commentData.comment_content }}</view>
 			<view class="comment-info">
-				<view class="comment-button" @click="commentReply({ comment: commentData, isReply })">
+				<view
+					class="comment-button"
+					@click="commentReply({ comment: { ...commentData }, isReply })"
+				>
 					回复
 				</view>
 			</view>
@@ -54,9 +57,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-	},
-	data() {
-		return {};
 	},
 	methods: {
 		commentReply(data) {

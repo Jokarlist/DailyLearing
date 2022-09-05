@@ -46,6 +46,13 @@
 				"navigationBarTitleText": "文章详情",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/commentList/commentList",
+			"style": {
+				"navigationBarTitleText": "评论列表",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

@@ -21,12 +21,12 @@
 		</view>
 		<!-- 内容 -->
 		<view class="detail-content">
-			<view class="detail-text"> <uParse :content="content" /> </view>
+			<!-- <view class="detail-text"> <uParse :content="content" /> </view> -->
 			<!-- 评论展示 -->
 			<view class="detail-comment-area">
 				<view class="comment-title">最新评论</view>
 				<view class="comment-content-container" v-for="item in commentList" :key="item.comment_id">
-					<CommentItem :commentData="item" @comment-reply="commentReply" />
+					<CommentItem :comment-data="item" @comment-reply="commentReply" />
 				</view>
 				<view class="no-data" v-if="!commentList.length">暂无评论</view>
 			</view>
@@ -39,7 +39,7 @@
 			</view>
 			<view class="detail-comment-icons">
 				<view class="detail-comment-icon-box">
-					<uni-icons type="chat" size="22" color="#f07373"></uni-icons>
+					<uni-icons type="chat" size="22" color="#f07373" @click="go2CommentListPage"></uni-icons>
 				</view>
 				<Favor class="detail-comment-icon-box" :article-id="articleDetail._id" size="22" />
 				<view class="detail-comment-icon-box">
@@ -53,7 +53,7 @@
 			</view>
 		</view>
 		<CommentMask
-			:showPopup="showPopup"
+			:show-popup="showPopup"
 			@close-comment-mask="showPopup = $event"
 			@publish-comment="_publishComment"
 		/>
@@ -127,7 +127,6 @@ export default {
 			};
 
 			this.startComment();
-			// comment.reply_id && (this.replyData.reply_id = comment)
 		},
 		async _followAuthor() {
 			try {
@@ -182,6 +181,11 @@ export default {
 			} catch (e) {
 				console.log("未登录，请先登录");
 			}
+		},
+		go2CommentListPage() {
+			uni.navigateTo({
+				url: `/pages/commentList/commentList?id=${this.articleDetail._id}`,
+			});
 		},
 	},
 	computed: {
