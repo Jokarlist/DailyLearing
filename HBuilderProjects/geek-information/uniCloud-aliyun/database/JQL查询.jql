@@ -11,10 +11,6 @@
 // 下面示例查询uni-id-users表的所有数据
 const dbCmd = db.command;
 
-/* db.collection('article').update({
-	abstractText: dbCmd.rename("abstract_text"),
-}); */
-
-db.collection("user").update({
-	phoneNum: dbCmd.rename("phone_num"),
-});
+db.collection("article").doc("6301b5d543000a0001d718b5").update({
+	comments: dbCmd.remove()
+})

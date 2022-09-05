@@ -19,12 +19,12 @@
 		</view>
 		<!-- 内容 -->
 		<view class="detail-content">
-			<view class="detail-text"> <uParse :content="content" /> </view>
+			<!-- <view class="detail-text"> <uParse :content="content" /> </view> -->
 			<!-- 评论展示 -->
 			<view class="detail-comment-area">
 				<view class="comment-title">最新评论</view>
 				<view class="comment-content-container" v-for="item in commentList" :key="item.comment_id">
-					<CommentItem :commentData="item" />
+					<CommentItem :commentData="item" @comment-reply="commentReply" />
 				</view>
 				<view class="no-data" v-if="!commentList.length">暂无评论</view>
 			</view>
@@ -73,6 +73,7 @@ export default {
 			articleDetail: null,
 			showPopup: false,
 			commentList: [],
+			replyData: {},
 		};
 	},
 	methods: {
@@ -94,6 +95,7 @@ export default {
 				articleId: this.articleDetail._id,
 				userId: this.userInfo._id,
 				content: commentValue,
+				...this.replyData, // 若当前为对指定评论回复则 replyData 有值
 			});
 
 			uni.showToast({
@@ -101,6 +103,8 @@ export default {
 			});
 
 			this.showPopup = false;
+			this._getCommentList();
+			this.replyData = {};
 		},
 		async _getCommentList() {
 			const commentList = await this.$http.getCommentList({
@@ -108,6 +112,17 @@ export default {
 			});
 
 			this.commentList = commentList;
+		},
+		commentReply({ comment, isReply }) {
+			this.replyData = {
+				comment_id: comment.comment_id,
+				is_reply: isReply,
+				// 如果是某用户间的指定回复
+				reply_id: comment.reply_id ? comment.reply_id : "",
+			};
+
+			this.startComment();
+			// comment.reply_id && (this.replyData.reply_id = comment)
 		},
 	},
 	computed: {
