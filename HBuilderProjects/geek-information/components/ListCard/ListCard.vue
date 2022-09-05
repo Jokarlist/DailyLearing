@@ -12,7 +12,7 @@
 				</view>
 				<view class="desc">
 					<view class="article-type">{{ item.classify }}</view>
-					<view class="visit-times">{{ item.browse_count }}浏览</view>
+					<view class="visit-times">{{ item.browse_count }} 浏览</view>
 				</view>
 			</view>
 		</view>
@@ -34,7 +34,7 @@
 			</view>
 			<view class="desc list-card-bottom">
 				<view class="article-type">{{ item.classify }}</view>
-				<view class="visit-times">{{ item.browse_count }}浏览</view>
+				<view class="visit-times">{{ item.browse_count }} 浏览</view>
 			</view>
 		</view>
 		<!-- 大图模式 -->
@@ -48,7 +48,7 @@
 			</view>
 			<view class="desc list-card-bottom">
 				<view class="article-type">{{ item.classify }}</view>
-				<view class="visit-times">{{ item.browse_count }}浏览</view>
+				<view class="visit-times">{{ item.browse_count }} 浏览</view>
 			</view>
 		</view>
 	</view>

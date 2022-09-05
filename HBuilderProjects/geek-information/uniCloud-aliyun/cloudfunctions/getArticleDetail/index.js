@@ -2,6 +2,10 @@
 const db = uniCloud.database();
 
 exports.main = async ({ articleId }, context) => {
+	await db.collection("article").doc(articleId).update({
+		browse_count: db.command.inc(1)
+	});
+	
 	const { data: [articleDetail] } = await db
 		.collection("article")
 		.aggregate()

@@ -1,6 +1,6 @@
 <template>
 	<view class="favor-container" @click.stop="_changeFavorStaus">
-		<uni-icons color="#ff6600" :type="isFavor ? 'heart-filled' : 'heart'" size="20"></uni-icons>
+		<uni-icons color="#ff6600" :type="isFavor ? 'heart-filled' : 'heart'" :size="size"></uni-icons>
 	</view>
 </template>
 
@@ -11,6 +11,10 @@ export default {
 		articleId: {
 			type: String,
 			required: true,
+		},
+		size: {
+			type: String,
+			default: "20",
 		},
 	},
 	data() {

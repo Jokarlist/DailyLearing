@@ -17,3 +17,9 @@ export const updateFollowAuthor = data => request({
 	name: "updateFollowAuthor",
 	data
 });
+
+// 更新文章点赞信息
+export const updateThumbUp = data => uni.request({
+	name: "updateThumbUp",
+	data
+});

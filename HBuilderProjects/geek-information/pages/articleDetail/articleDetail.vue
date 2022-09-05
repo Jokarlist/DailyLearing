@@ -41,11 +41,14 @@
 				<view class="detail-comment-icon-box">
 					<uni-icons type="chat" size="22" color="#f07373"></uni-icons>
 				</view>
+				<Favor class="detail-comment-icon-box" :article-id="articleDetail._id" size="22" />
 				<view class="detail-comment-icon-box">
-					<uni-icons type="heart" size="22" color="#f07373"></uni-icons>
-				</view>
-				<view class="detail-comment-icon-box">
-					<uni-icons type="hand-up" size="22" color="#f07373"></uni-icons>
+					<uni-icons
+						:type="isThumbUp ? 'hand-up-filled' : 'hand-up'"
+						size="22"
+						color="#f07373"
+						@click="_updateThumbUp"
+					></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -152,6 +155,34 @@ export default {
 				console.log("未登录，请先登录");
 			}
 		},
+		async _updateThumbUp() {
+			try {
+				await this.checkLoginStatus();
+				const { msg } = await this.$http.updateThumbUp({
+					articleId: this.articleDetail._id,
+					userId: this.userInfo._id,
+				});
+
+				uni.showToast({
+					title: msg,
+					icon: "none",
+				});
+
+				const targetArticleId = this.articleDetail._id;
+				let thumbsUpArticleIds = [...this.userInfo.thumbs_up_article_ids];
+				if (thumbsUpArticleIds.includes(targetArticleId)) {
+					thumbsUpArticleIds = thumbsUpArticleIds.filter(id => !id === targetArticleId);
+					this.articleDetail.thumbs_up_count--;
+				} else {
+					thumbsUpArticleIds.push(targetArticleId);
+					this.articleDetail.thumbs_up_count++;
+				}
+
+				this.setUserInfo({ ...this.userInfo, thumbs_up_article_ids: thumbsUpArticleIds });
+			} catch (e) {
+				console.log("未登录，请先登录");
+			}
+		},
 	},
 	computed: {
 		content() {
@@ -165,6 +196,15 @@ export default {
 			try {
 				return (
 					this.userInfo && this.userInfo.author_likes_ids.includes(this.articleDetail.author.id)
+				);
+			} catch (e) {
+				return false;
+			}
+		},
+		isThumbUp() {
+			try {
+				return (
+					this.userInfo && this.userInfo.thumbs_up_article_ids.includes(this.articleDetail._id)
 				);
 			} catch (e) {
 				return false;
