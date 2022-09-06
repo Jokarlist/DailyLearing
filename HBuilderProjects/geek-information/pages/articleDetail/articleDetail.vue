@@ -21,7 +21,7 @@
 		</view>
 		<!-- 内容 -->
 		<view class="detail-content">
-			<!-- <view class="detail-text"> <uParse :content="content" /> </view> -->
+			<view class="detail-text"> <uParse :content="content" /> </view>
 			<!-- 评论展示 -->
 			<view class="detail-comment-area">
 				<view class="comment-title">最新评论</view>
@@ -68,8 +68,9 @@ export default {
 	components: {
 		uParse,
 	},
-	onLoad({ basicInfo }) {
-		this.articleDetail = JSON.parse(basicInfo);
+	onLoad(options) {
+		this.articleDetail = this.$Router.currentRoute.query.basicInfo;
+		// this.articleDetail = JSON.parse(options.basicInfo);
 		this._getArticleDetail();
 		this._getCommentList();
 	},

@@ -19,7 +19,13 @@ export const updateFollowAuthor = data => request({
 });
 
 // 更新文章点赞信息
-export const updateThumbUp = data => uni.request({
+export const updateThumbUp = data => request({
 	name: "updateThumbUp",
+	data
+});
+
+// 获取关注的文章
+export const getFollowArticle = data => request({
+	name: "getFollowArticle",
 	data
 });

@@ -8,9 +8,12 @@
 		},
 		{
 			"path": "pages/follow/follow",
+			"meta": {
+				"needLogin": true
+			},
 			"style": {
 				"navigationBarTitleText": "关注",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -35,6 +38,7 @@
 		},
 		{
 			"path": "pages/user/login/login",
+			"name": "login",
 			"style": {
 				"navigationBarTitleText": "用户登录",
 				"enablePullDownRefresh": false

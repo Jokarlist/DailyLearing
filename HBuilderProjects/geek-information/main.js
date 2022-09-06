@@ -5,10 +5,14 @@ import module from "@/api/request/index.js";
 import loginRules from "@/plugin/validateRules.js";
 import userInfo from "@/plugin/userInfo.js";
 
+import { router, RouterMount } from './router.js'
+
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
 App.mpType = 'app'
+
+Vue.use(router)
 
 Vue.prototype.$http = module;
 Vue.use(loginRules);
@@ -18,7 +22,15 @@ const app = new Vue({
 	...App,
 	store
 })
-app.$mount()
+
+// #ifdef H5
+RouterMount(app, router, '#app')
+// #endif
+
+// #ifndef H5
+app.$mount(); // 为了兼容小程序及app端必须这样写才有效果
+// #endif
+
 // #endif
 
 // #ifdef VUE3

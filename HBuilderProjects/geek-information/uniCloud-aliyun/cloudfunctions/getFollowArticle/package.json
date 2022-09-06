@@ -1,0 +1,7 @@
+{
+  "name": "getFollowArticle",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
