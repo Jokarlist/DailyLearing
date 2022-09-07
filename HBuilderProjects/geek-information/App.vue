@@ -15,4 +15,8 @@ export default {
 <style>
 /*每个页面公共css */
 @import url("@/components/u-parse/u-parse.css");
+
+page {
+	height: 100%;
+}
 </style>

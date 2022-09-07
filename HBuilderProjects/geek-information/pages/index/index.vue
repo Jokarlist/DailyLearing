@@ -2,6 +2,7 @@
 	<view class="home-container">
 		<NavBar />
 		<TabBar
+			class="tabbar"
 			:label-list="labelList"
 			:active-idx="activeIdx"
 			@active-idx-change="onActiveIdxChange"
@@ -62,6 +63,10 @@ export default {
 	height: 100%;
 	overflow: hidden;
 	box-sizing: border-box;
+	
+	.tabbar {
+		width: 100%;
+	}
 
 	.article-list {
 		flex: 1;

@@ -113,15 +113,22 @@ export default {
 					})
 					.then(() =>
 						setTimeout(() => {
-							// #ifdef H5
-							uni.switchTab({
-								url: "/pages/index/index",
-							});
-							// #endif
+							try {
+								uni.navigateBack();
+							} catch (e) {
+								uni.switchTab({
+									url: "/pages/index/index",
+								});
+							}
+							// // #ifdef H5
+							// uni.switchTab({
+							// 	url: "/pages/index/index",
+							// });
+							// // #endif
 
-							// #ifndef H5
-							uni.navigateBack();
-							// #endif
+							// // #ifndef H5
+							// uni.navigateBack();
+							// // #endif
 						}, 1500)
 					);
 			}

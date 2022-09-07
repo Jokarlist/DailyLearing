@@ -1,12 +1,18 @@
 export default ({ name, data = {} }) => {
+	const { isShowLoading } = data;
+	isShowLoading === false && delete data.isShowLoading;
+	
 	return new Promise(async (resolve, reject) => {
-		uni.showLoading();
+		isShowLoading !== false && uni.showLoading({
+			title: "加载中"
+		});
+
 		await uniCloud.callFunction({
 				name,
 				data
 			})
 			.then(({ result: { code, msg, data } }) => {
-				uni.hideLoading();
+				isShowLoading !== false && uni.hideLoading();
 				if (code === 0) {
 					resolve(data);
 				} else {
@@ -17,7 +23,7 @@ export default ({ name, data = {} }) => {
 				}
 			})
 			.catch(err => {
-				uni.hideLoading();
+				isShowLoading !== false && uni.hideLoading();
 				reject(err)
 			});
 	});

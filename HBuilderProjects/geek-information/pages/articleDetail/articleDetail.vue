@@ -69,14 +69,8 @@ export default {
 		uParse,
 	},
 	onLoad(options) {
-		// const eventChannel = this.getOpenerEventChannel();
-		// console.log(eventChannel);
-		// eventChannel.on("transferBasicInfo", basicInfo => console.log(basicInfo));
-		/* uni.$on("go-2-article-detail", basicInfo => {
-			// this.articleDetail = basicInfo;
-			console.log(basicInfo);
-		}); */
-		this.articleDetail = this.$Router.currentRoute.query.basicInfo; // url有长度限制，太长的字符串有一部分传递失败，导致 basicInfo 获取不正确
+		// url有长度限制，太长的字符串有一部分传递失败，导致 basicInfo 获取不正确，所以换用路由栈传值的方式
+		this.articleDetail = this.$Router.currentRoute.query;
 		// this.articleDetail = JSON.parse(options.basicInfo);
 		this._getArticleDetail();
 		this._getCommentList();

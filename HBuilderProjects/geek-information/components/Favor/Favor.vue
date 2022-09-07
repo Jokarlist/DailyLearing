@@ -28,7 +28,7 @@ export default {
 					articleId: this.articleId,
 					userId: this.userInfo._id,
 				});
-
+				
 				uni.showToast({
 					title: msg,
 					icon: "none",

@@ -41,8 +41,8 @@ export default {
 			return;
 		}
 		// #endif
-		uni.$on("update-follow-article", this._getFollowArticle);
-		uni.$on("update-follow-author", this._getFollowAuthor);
+		uni.$on("update-follow-article", () => this._getFollowArticle(false));
+		uni.$on("update-follow-author", () => this._getFollowAuthor(false));
 		this._getFollowArticle();
 		this._getFollowAuthor();
 	},
@@ -58,16 +58,18 @@ export default {
 		};
 	},
 	methods: {
-		async _getFollowArticle() {
+		async _getFollowArticle(isShowLoading = true) {
 			const followArticleList = await this.$http.getFollowArticle({
 				userId: this.userInfo._id,
+				isShowLoading
 			});
 
 			this.followArticleList = followArticleList;
 		},
-		async _getFollowAuthor() {
+		async _getFollowAuthor(isShowLoading = true) {
 			const followAuthorList = await this.$http.getFollowAuthor({
 				userId: this.userInfo._id,
+				isShowLoading
 			});
 
 			this.followAuthorList = followAuthorList;
@@ -77,12 +79,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-page {
-	height: 100%;
-	display: flex;
-}
-
 .follow-container {
+	height: 100%;
 	display: flex;
 	flex: 1;
 	flex-direction: column;

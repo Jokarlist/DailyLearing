@@ -28,8 +28,13 @@
 			</view>
 			<view class="list-card-middle">
 				<view class="list-card-img" v-for="(cover, i) in item.cover.slice(0, 3)" :key="i">
-					<!-- <image :src="`https://images.weserv.nl/?url=${cover}`" mode="aspectFill"></image> -->
+					<!-- #ifndef MP -->
+					<image :src="`https://images.weserv.nl/?url=${cover}`" mode="aspectFill"></image>
+					<!-- #endif -->
+
+					<!-- #ifdef MP -->
 					<image :src="cover" mode="aspectFill"></image>
+					<!-- #endif -->
 				</view>
 			</view>
 			<view class="desc list-card-bottom">
@@ -68,16 +73,10 @@ export default {
 			const { _id, title, author, create_time, thumbs_up_count, browse_count } = this.item;
 
 			const basicInfo = { _id, title, author, create_time, thumbs_up_count, browse_count };
-			uni.navigateTo({
-				// url: "/pages/articleDetail/articleDetail",
-				url: `/pages/articleDetail/articleDetail?basicInfo=${JSON.stringify(basicInfo)}`,
-				/* success: res => {
-					console.log(res);
-					res.eventChannel.emit("transferBasicInfo", basicInfo);
-				}, */
+			this.$Router.push({
+				path: "/pages/articleDetail/articleDetail",
+				query: basicInfo,
 			});
-
-			// uni.$emit("go-2-article-detail", basicInfo);
 		},
 	},
 };
