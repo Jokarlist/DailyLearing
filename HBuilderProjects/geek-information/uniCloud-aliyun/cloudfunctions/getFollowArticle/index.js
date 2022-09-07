@@ -23,7 +23,7 @@ exports.main = async ({ userId }, context) => {
 
 	return {
 		code: 0,
-		msg: "请求关注文章成功",
+		msg: "请求收藏文章成功",
 		data: followList
 	};
 };

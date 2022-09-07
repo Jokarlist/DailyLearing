@@ -2,12 +2,16 @@
 	<view class="follow-container">
 		<view class="follow-tab">
 			<view class="follow-tab-box">
-				<view class="follow-tab-item" :class="{ active: curIdx === 0 }">文章</view>
-				<view class="follow-tab-item" :class="{ active: curIdx === 1 }">作者</view>
+				<view class="follow-tab-item" :class="{ active: curIdx === 0 }" @click="curIdx = 0">
+					文章
+				</view>
+				<view class="follow-tab-item" :class="{ active: curIdx === 1 }" @click="curIdx = 1">
+					作者
+				</view>
 			</view>
 		</view>
 		<view class="follow-list">
-			<swiper class="follow-list-swiper" :current="curIdx">
+			<swiper class="follow-list-swiper" :current="curIdx" @change="curIdx = $event.detail.current">
 				<swiper-item>
 					<ListItem
 						:article-list="followArticleList"
@@ -16,7 +20,10 @@
 					/>
 					<view class="no-data" v-else>暂无收藏的文章</view>
 				</swiper-item>
-				<swiper-item> 2 </swiper-item>
+				<swiper-item>
+					<AuthorList :author-list="followAuthorList" v-if="followAuthorList.length" />
+					<view class="no-data" v-else>暂无关注的作者</view>
+				</swiper-item>
 			</swiper>
 		</view>
 	</view>
@@ -34,15 +41,18 @@ export default {
 			return;
 		}
 		// #endif
-
+		uni.$on("update-follow-article", this._getFollowArticle);
+		uni.$on("update-follow-author", this._getFollowAuthor);
 		this._getFollowArticle();
+		this._getFollowAuthor();
 	},
-	onPullDownRefresh() {
-		this._getFollowArticle();
+	onUnload() {
+		uni.$off();
 	},
 	data() {
 		return {
 			followArticleList: [],
+			followAuthorList: [],
 			curIdx: 0,
 			isShowLoadMore: false,
 		};
@@ -53,8 +63,14 @@ export default {
 				userId: this.userInfo._id,
 			});
 
-			uni.stopPullDownRefresh();
 			this.followArticleList = followArticleList;
+		},
+		async _getFollowAuthor() {
+			const followAuthorList = await this.$http.getFollowAuthor({
+				userId: this.userInfo._id,
+			});
+
+			this.followAuthorList = followAuthorList;
 		},
 	},
 };

@@ -7,6 +7,7 @@
 			@active-idx-change="onActiveIdxChange"
 		/>
 		<ArticleList
+			class="article-list"
 			:label-list="labelList"
 			:active-idx="activeIdx"
 			@active-idx-change="onActiveIdxChange"
@@ -56,19 +57,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-page {
+.home-container {
+	@include flex(column, flex-start);
 	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
 
-	.home-container {
-		@include flex(column, flex-start);
-		height: 100%;
-		overflow: hidden;
-		box-sizing: border-box;
-
-		.article-list-container {
-			flex: 1;
-			width: 100%;
-		}
+	.article-list {
+		flex: 1;
+		width: 100%;
 	}
 }
 </style>

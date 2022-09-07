@@ -69,7 +69,14 @@ export default {
 		uParse,
 	},
 	onLoad(options) {
-		this.articleDetail = this.$Router.currentRoute.query.basicInfo;
+		// const eventChannel = this.getOpenerEventChannel();
+		// console.log(eventChannel);
+		// eventChannel.on("transferBasicInfo", basicInfo => console.log(basicInfo));
+		/* uni.$on("go-2-article-detail", basicInfo => {
+			// this.articleDetail = basicInfo;
+			console.log(basicInfo);
+		}); */
+		this.articleDetail = this.$Router.currentRoute.query.basicInfo; // url有长度限制，太长的字符串有一部分传递失败，导致 basicInfo 获取不正确
 		// this.articleDetail = JSON.parse(options.basicInfo);
 		this._getArticleDetail();
 		this._getCommentList();
@@ -151,6 +158,7 @@ export default {
 				}
 
 				this.setUserInfo({ ...this.userInfo, author_likes_ids: authorLikesIds });
+				uni.$emit("update-follow-author");
 			} catch (e) {
 				console.log("未登录，请先登录");
 			}

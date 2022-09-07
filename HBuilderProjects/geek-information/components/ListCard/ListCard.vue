@@ -27,9 +27,9 @@
 				<Favor :article-id="item._id" />
 			</view>
 			<view class="list-card-middle">
-				<view class="list-card-img" v-for="(item, i) in item.cover.slice(0, 3)" :key="i">
-					<image :src="`https://images.weserv.nl/?url=${item}`" mode="aspectFill"></image>
-					<!-- <image :src="item" mode="aspectFill"></image> -->
+				<view class="list-card-img" v-for="(cover, i) in item.cover.slice(0, 3)" :key="i">
+					<!-- <image :src="`https://images.weserv.nl/?url=${cover}`" mode="aspectFill"></image> -->
+					<image :src="cover" mode="aspectFill"></image>
 				</view>
 			</view>
 			<view class="desc list-card-bottom">
@@ -65,25 +65,30 @@ export default {
 	},
 	methods: {
 		go2ArticleDetail() {
-			const {
-				_id,
-				title,
-				author,
-				create_time,
-				thumbs_up_count,
-				browse_count,
-			} = this.item;
+			const { _id, title, author, create_time, thumbs_up_count, browse_count } = this.item;
 
 			const basicInfo = { _id, title, author, create_time, thumbs_up_count, browse_count };
 			uni.navigateTo({
+				// url: "/pages/articleDetail/articleDetail",
 				url: `/pages/articleDetail/articleDetail?basicInfo=${JSON.stringify(basicInfo)}`,
+				/* success: res => {
+					console.log(res);
+					res.eventChannel.emit("transferBasicInfo", basicInfo);
+				}, */
 			});
+
+			// uni.$emit("go-2-article-detail", basicInfo);
 		},
 	},
 };
 </script>
 
 <style lang="scss">
+page,
+.list-card-container {
+	height: 100%;
+}
+
 .list-card {
 	@include flex();
 	padding: 20rpx;

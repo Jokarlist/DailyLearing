@@ -89,13 +89,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.swiper-container {
+.article-list-container {
 	height: 100%;
-	// touch-action: none;
-
-	.swiper-item {
+	
+	.swiper-container {
 		height: 100%;
-		overflow: hidden;
+		// touch-action: none;
+
+		.swiper-item {
+			height: 100%;
+			// overflow: hidden;
+		}
 	}
 }
 </style>
