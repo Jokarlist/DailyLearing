@@ -35,3 +35,9 @@ export const getFollowAuthor = data => request({
 	name: "getFollowAuthor",
 	data
 });
+
+// 获取我发布的文章
+export const getMyArticle = data => request({
+	name: "getMyArticle",
+	data
+});

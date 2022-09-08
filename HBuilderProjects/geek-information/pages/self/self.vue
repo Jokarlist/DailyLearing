@@ -1,24 +1,23 @@
 <template>
 	<view class="self-container">
 		<view class="my-header" v-if="userInfo">
-			<view class="my-header-bg">
-				<image src="../../static/img/logo.jpeg" mode="aspectFill"></image>
-			</view>
+			<view class="my-header-bg"> <image :src="userInfo.avatar" mode="aspectFill"></image> </view>
 			<view class="my-header-logo">
 				<view class="my-header-logo-box">
-					<image src="../../static/img/logo.jpeg" mode="aspectFill"></image>
+					<image :src="userInfo.avatar" mode="aspectFill"></image>
 				</view>
-				<text class="username">Web讲师团</text>
+				<text class="username">{{ userInfo.author_name }}</text>
 			</view>
 			<view class="my-header-info">
 				<view class="my-header-info-box">
-					<text class="my-header-info-title">被关注</text> <text>20</text>
+					<text class="my-header-info-title">被关注</text> <text>{{ userInfo.follow_count }}</text>
 				</view>
 				<view class="my-header-info-box">
-					<text class="my-header-info-title">粉丝</text> <text>50</text>
+					<text class="my-header-info-title">粉丝</text> <text>{{ userInfo.fans_count }}</text>
 				</view>
 				<view class="my-header-info-box">
-					<text class="my-header-info-title">积分</text> <text>100</text>
+					<text class="my-header-info-title">积分</text>
+					<text>{{ Number(userInfo.integral_count) }}</text>
 				</view>
 			</view>
 		</view>
@@ -31,7 +30,7 @@
 				</view>
 				<uni-icons type="arrowright" size="14" color="#666"></uni-icons>
 			</view>
-			<view class="my-content-list">
+			<view class="my-content-list" @click="go2ArticlePage">
 				<view class="my-content-list-title">
 					<uni-icons class="icon" type="contact" size="16" color="#666"></uni-icons>
 					<text>我的文章</text>
@@ -47,13 +46,13 @@
 			</view>
 
 			<!-- #ifdef APP-PLUS -->
-			<view class="my-content-list">
+			<view class="my-content-list" @click="getNewVersion">
 				<view class="my-content-list-title">
 					<uni-icons class="icon" type="paperclip" size="16" color="#666"></uni-icons>
 					<view class="version-container">
 						<text>
 							当前版本
-							<text v-if="isHaveNewVersion" class="new-version-tip">(点击下载最新版本)</text>
+							<text v-if="!isLatestVersion" class="new-version-tip">(点击下载最新版本)</text>
 						</text>
 						<text class="version">{{ curVersion }}</text>
 					</view>
@@ -71,10 +70,25 @@
 
 <script>
 export default {
+	onLoad() {
+		// #ifdef APP-PLUS
+		uni.getSystemInfo({
+			success: res => {
+				if (res.platform === "andriod") {
+					plus.runtime.getProperty(plus.runtime.appid, wgitinfo => {
+						this.curVersion = wgitinfo;
+						this._checkVersion();
+					});
+				}
+			},
+		});
+		// #endif
+	},
 	data() {
 		return {
 			curVersion: "1.0.0",
-			isHaveNewVersion: false,
+			isLatestVersion: true,
+			latestVersionDownloadLink: "",
 		};
 	},
 	methods: {
@@ -88,6 +102,48 @@ export default {
 			uni.navigateTo({
 				url: "/pages/index/index",
 			});
+		},
+		go2ArticlePage() {
+			uni.navigateTo({
+				url: "/pages/myArticle/myArticle",
+			});
+		},
+		async _checkVersion() {
+			const { version, latestVersionDownloadLink } = await this.$http.getLatestVersion();
+			if (version > this.curVersion) {
+				this.isLatestVersion = version;
+				this.latestVersionDownloadLink = latestVersionDownloadLink;
+			}
+		},
+		getNewVersion() {
+			uni.showLoading({
+				title: "下载中，请稍等",
+			});
+
+			const task = plus.downloader.createDownload(
+				this.latestVersionDownloadLink,
+				{},
+				(d, status) => {
+					uni.hideLoading();
+					if (status == 200) {
+						plus.runtime.install(plus.io.convertLocalFileSystemURL(d.filename), {}, {}, error => {
+							uni.showToast({
+								title: "安装失败",
+								duration: 1500,
+								icon: "none",
+							});
+						});
+					} else {
+						uni.showToast({
+							title: "更新失败",
+							duration: 1500,
+							icon: "none",
+						});
+					}
+				}
+			);
+
+			task.start();
 		},
 	},
 };
