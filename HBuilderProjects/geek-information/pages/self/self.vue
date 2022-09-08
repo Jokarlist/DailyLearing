@@ -37,7 +37,7 @@
 				</view>
 				<uni-icons type="arrowright" size="14" color="#666"></uni-icons>
 			</view>
-			<view class="my-content-list">
+			<view class="my-content-list" @click="go2FeebackPage">
 				<view class="my-content-list-title">
 					<uni-icons class="icon" type="help" size="16" color="#666"></uni-icons>
 					<text>意见反馈</text>
@@ -144,6 +144,11 @@ export default {
 			);
 
 			task.start();
+		},
+		go2FeebackPage() {
+			uni.navigateTo({
+				url: "/pages/feedback/feedback",
+			});
 		},
 	},
 };

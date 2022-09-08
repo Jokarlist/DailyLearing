@@ -60,8 +60,18 @@
 		},
 		{
 			"path": "pages/myArticle/myArticle",
+			"meta": {
+				"needLogin": true
+			},
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "我的文章",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/feedback/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈",
 				"enablePullDownRefresh": false
 			}
 		}
