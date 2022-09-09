@@ -24,13 +24,13 @@ export const updateThumbUp = data => request({
 	data
 });
 
-// 获取收藏的文章
+// 获取收藏文章列表
 export const getFollowArticle = data => request({
 	name: "getFollowArticle",
 	data
 });
 
-// 获取关注的作者
+// 获取关注作者列表
 export const getFollowAuthor = data => request({
 	name: "getFollowAuthor",
 	data
@@ -39,5 +39,17 @@ export const getFollowAuthor = data => request({
 // 获取我发布的文章
 export const getMyArticle = data => request({
 	name: "getMyArticle",
+	data
+});
+
+// 用户反馈意见上传
+export const updateFeedback = data => request({
+	name: "updateFeedback",
+	data
+});
+
+// 用户头像更改
+export const updateUserAvater = data => request({
+	name: "updateUserAvater",
 	data
 });

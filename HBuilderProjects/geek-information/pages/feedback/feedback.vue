@@ -12,12 +12,10 @@
 
 		<view class="feedback-image-box">
 			<view class="feedback-image-item" v-for="(item, idx) in imageList" :key="item.src">
-				<view class="close-icon">
+				<view class="close-icon" @click="deleteImage(idx)">
 					<uni-icons type="closeempty" size="18" color="#fff"></uni-icons>
 				</view>
-				<view class="image-box">
-					<image src="../../static/img/logo.jpeg" mode="aspectFill"></image>
-				</view>
+				<view class="image-box"> <image :src="item.src" mode="aspectFill"></image> </view>
 			</view>
 			<view class="feedback-image-item" v-if="imageList.length < 5" @click="_addImage">
 				<view class="image-box">
@@ -39,8 +37,72 @@ export default {
 		};
 	},
 	methods: {
-		async _addImage() {},
-		async _submitFeedback() {},
+		async _addImage() {
+			const count = 5 - this.imageList.length;
+			uni.chooseImage({
+				count,
+				success: ({ tempFilePaths, tempFiles }) => {
+					tempFilePaths.forEach((p, idx) => {
+						if (idx < count) {
+							this.imageList.push({
+								src: p,
+								name: tempFiles[idx].name,
+							});
+						}
+					});
+				},
+			});
+		},
+		deleteImage(idx) {
+			this.imageList.splice(idx, 1);
+		},
+		async _submitFeedback() {
+			if (!this.content) {
+				uni.showToast({
+					title: "反馈内容不能为空",
+					icon: "none",
+				});
+
+				return;
+			}
+
+			uni.showLoading({
+				title: "反馈意见上传中",
+			});
+
+			const feedbackImageList = await Promise.all(this.getFileId());
+			uni.hideLoading();
+			const { msg } = await this.$http.updateFeedback({
+				content: this.content,
+				feedbackImageList,
+				userId: this.userInfo._id,
+			});
+
+			uni
+				.showToast({
+					title: msg,
+					duration: 1500,
+				})
+				.then(() =>
+					setTimeout(() =>
+						uni.switchTab({
+							url: "/pages/self/self",
+						})
+					)
+				);
+		},
+		getFileId() {
+			return this.imageList.map(item => {
+				return new Promise(async resolve => {
+					const result = await uniCloud.uploadFile({
+						filePath: item.src,
+						cloudPath: item.name,
+					});
+
+					resolve(result.fileID);
+				});
+			});
+		},
 	},
 };
 </script>

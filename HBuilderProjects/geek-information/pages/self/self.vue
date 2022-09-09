@@ -3,7 +3,7 @@
 		<view class="my-header" v-if="userInfo">
 			<view class="my-header-bg"> <image :src="userInfo.avatar" mode="aspectFill"></image> </view>
 			<view class="my-header-logo">
-				<view class="my-header-logo-box">
+				<view class="my-header-logo-box" @click="changeAvatar">
 					<image :src="userInfo.avatar" mode="aspectFill"></image>
 				</view>
 				<text class="username">{{ userInfo.author_name }}</text>
@@ -149,6 +149,43 @@ export default {
 			uni.navigateTo({
 				url: "/pages/feedback/feedback",
 			});
+		},
+		changeAvatar() {
+			uni.chooseImage({
+				count: 1,
+				success: async ({ tempFilePaths: [path] }) => {
+					// 为上传的头像随机生成一个文件名，因为小程序的 chooseImage 获取不到图片的文件名
+					const name = Number(
+						Math.random()
+							.toString()
+							.substring(2, 2 + 5) + Date.now()
+					).toString(36);
+
+					const filePath = await this._uploadFile(path, name);
+					await this._updateUserAvater(filePath);
+				},
+			});
+		},
+		async _uploadFile(filePath, cloudPath) {
+			const { fileID } = await uniCloud.uploadFile({
+				filePath,
+				cloudPath,
+			});
+
+			return fileID;
+		},
+		async _updateUserAvater(filePath) {
+			const { msg } = await this.$http.updateUserAvater({
+				userId: this.userInfo._id,
+				filePath,
+			});
+
+			uni.showToast({
+				title: msg,
+				icon: "none",
+			});
+
+			this.setUserInfo({ ...this.userInfo, avatar: filePath });
 		},
 	},
 };
