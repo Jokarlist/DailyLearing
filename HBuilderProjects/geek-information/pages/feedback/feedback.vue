@@ -46,7 +46,12 @@ export default {
 						if (idx < count) {
 							this.imageList.push({
 								src: p,
+								// #ifdef H5
 								name: tempFiles[idx].name,
+								// #endif
+								// #ifndef H5
+								name: String(Date.now()) + p.substring(p.lastIndexOf(".")),
+								// #endif
 							});
 						}
 					});

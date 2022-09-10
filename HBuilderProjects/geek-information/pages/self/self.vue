@@ -75,8 +75,8 @@ export default {
 		uni.getSystemInfo({
 			success: res => {
 				if (res.platform === "andriod") {
-					plus.runtime.getProperty(plus.runtime.appid, wgitinfo => {
-						this.curVersion = wgitinfo;
+					plus.runtime.getProperty(plus.runtime.appid, wgtInfo => {
+						this.curVersion = wgtInfo.version;
 						this._checkVersion();
 					});
 				}
@@ -153,13 +153,9 @@ export default {
 		changeAvatar() {
 			uni.chooseImage({
 				count: 1,
-				success: async ({ tempFilePaths: [path] }) => {
+				success: async ({ tempFilePaths: [path], tempFiles: [{ name }] }) => {
 					// 为上传的头像随机生成一个文件名，因为小程序的 chooseImage 获取不到图片的文件名
-					const name = Number(
-						Math.random()
-							.toString()
-							.substring(2, 2 + 5) + Date.now()
-					).toString(36);
+					name = name || `${Date.now()}${path.substring(path.lastIndexOf("."))}`;
 
 					const filePath = await this._uploadFile(path, name);
 					await this._updateUserAvater(filePath);

@@ -19,7 +19,7 @@
 		{
 			"path": "pages/self/self",
 			"style": {
-				"navigationBarTitleText": "我的",
+				"navigationBarTitleText": "用户信息",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -78,7 +78,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "极客资讯",
 		"navigationBarBackgroundColor": "#f25037",
 		"backgroundColor": "#f8f8f8"
 	},
